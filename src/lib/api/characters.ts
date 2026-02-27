@@ -5,22 +5,14 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { api } from './client';
-import type { ApiResponse, Character, GenerateCharactersRequest, GenerateCharactersResponse, Voice, VoiceListResponse } from '@/types/api';
-
-// Mock data
-const mockVoices: Voice[] = [
-  { id: 'v-zh-001', name: '霸道总裁', description: '低沉磁性男声，气场强大', audio_url: '', age: ['Adult'], language: 'zh-CN', gender: 'Male' },
-  { id: 'v-zh-002', name: '温柔御姐', description: '成熟知性女声，温暖有力', audio_url: '', age: ['Adult'], language: 'zh-CN', gender: 'Female' },
-  { id: 'v-zh-003', name: '少年热血', description: '清亮少年音，充满活力', audio_url: '', age: ['Young'], language: 'zh-CN', gender: 'Male' },
-  { id: 'v-en-001', name: 'Marcus', description: 'Deep warm baritone', audio_url: '', age: ['Adult'], language: 'en-US', gender: 'Male' },
-  { id: 'v-en-002', name: 'Sophia', description: 'Bright youthful voice', audio_url: '', age: ['Young Adult'], language: 'en-US', gender: 'Female' },
-];
+import type { ApiResponse, Character, GenerateCharactersRequest, GenerateCharactersResponse, VoiceListResponse } from '@/types/api';
+import { voices as allVoices } from '@/mock/voices';
 
 /**
  * 获取配音列表
  */
 export async function getVoices(params?: { language?: string; gender?: string }): Promise<ApiResponse<VoiceListResponse>> {
-  let voices = mockVoices;
+  let voices = allVoices;
   if (params?.language) voices = voices.filter(v => v.language === params.language);
   if (params?.gender) voices = voices.filter(v => v.gender === params.gender);
 

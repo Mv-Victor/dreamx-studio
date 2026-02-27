@@ -1,4 +1,9 @@
 import { Project, VisualStyle, Voice, Character, Episode } from '@/types';
+import { visualStyles } from './visual-styles';
+import { voices } from './voices';
+
+// Re-export from dedicated files
+export { visualStyles, voices };
 
 export const mockProjects: Project[] = [
   {
