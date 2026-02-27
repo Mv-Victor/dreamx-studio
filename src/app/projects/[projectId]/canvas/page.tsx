@@ -33,7 +33,7 @@ import { ComposeNode } from '@/components/canvas/nodes/compose-node';
 import { EntryNode } from '@/components/canvas/nodes/entry-node';
 import { GenerationTaskList } from '@/components/canvas/generation-task-list';
 import { getCanvasLayout } from '@/lib/canvas-layout';
-import { WorkflowNodeData } from '@/types/canvas';
+import type { WorkflowNodeData } from '@/types/canvas';
 
 const nodeTypes = {
   entry: EntryNode,
@@ -116,7 +116,7 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       initialLoadRef.current = false;
     }
-  }, [projectId]); // Run when projectId changes; initialLoadRef ensures one-time initialization per project
+  }, [projectId]); // initialLoadRef is a ref, not state; changes don't trigger re-render
 
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {

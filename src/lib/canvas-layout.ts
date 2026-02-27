@@ -9,10 +9,10 @@ interface LayoutResult {
   initialEdges: Edge[];
 }
 
-const nodeConfigs: Record<string, { label: string; description: string; status: 'completed' | 'active' | 'pending' }[]> = {
+const nodeConfigs: Record<string, { label: string; description: string; status: 'completed' | 'generating' | 'pending' }[]> = {
   single_episode: [
     { label: '开始', description: '一切从这里开始', status: 'completed' },
-    { label: '基础信息', description: '语言、风格、比例', status: 'active' },
+    { label: '基础信息', description: '语言、风格、比例', status: 'generating' },
     { label: '角色集', description: 'AI 生成角色形象与配音', status: 'pending' },
     { label: '剧本撰写', description: 'AI 生成分场剧本', status: 'pending' },
     { label: '场景设计', description: 'AI 生成视觉参考', status: 'pending' },
@@ -21,7 +21,7 @@ const nodeConfigs: Record<string, { label: string; description: string; status: 
   ],
   multi_episodes: [
     { label: '开始', description: '一切从这里开始', status: 'completed' },
-    { label: '基础信息', description: '语言、风格、集数、比例', status: 'active' },
+    { label: '基础信息', description: '语言、风格、集数、比例', status: 'generating' },
     { label: '故事圣经', description: 'AI 生成故事设定', status: 'pending' },
     { label: '角色集', description: 'AI 生成角色形象与配音', status: 'pending' },
     { label: '规划中心', description: '封面、剧集大纲', status: 'pending' },
@@ -32,7 +32,7 @@ const nodeConfigs: Record<string, { label: string; description: string; status: 
   ],
   script_based: [
     { label: '开始', description: '一切从这里开始', status: 'completed' },
-    { label: '基础信息', description: '语言、风格、比例', status: 'active' },
+    { label: '基础信息', description: '语言、风格、比例', status: 'generating' },
     { label: '剧本导入', description: '导入已有剧本', status: 'pending' },
     { label: '角色集', description: 'AI 生成角色形象', status: 'pending' },
     { label: '场景设计', description: 'AI 生成视觉参考', status: 'pending' },
@@ -41,7 +41,7 @@ const nodeConfigs: Record<string, { label: string; description: string; status: 
   ],
   music_mv: [
     { label: '开始', description: '一切从这里开始', status: 'completed' },
-    { label: '音乐配置', description: '上传或生成音乐', status: 'active' },
+    { label: '音乐配置', description: '上传或生成音乐', status: 'generating' },
     { label: '音乐分析', description: '节拍、情绪、歌词', status: 'pending' },
     { label: '视觉处理', description: '视觉风格方案', status: 'pending' },
     { label: '视觉设定', description: '风格与画面设定', status: 'pending' },
@@ -50,7 +50,7 @@ const nodeConfigs: Record<string, { label: string; description: string; status: 
   ],
   redbook_note: [
     { label: '开始', description: '一切从这里开始', status: 'completed' },
-    { label: '素材上传', description: '上传图片与事件描述', status: 'active' },
+    { label: '素材上传', description: '上传图片与事件描述', status: 'generating' },
     { label: '爆款文案', description: 'AI 生成小红书文案', status: 'pending' },
     { label: 'TTS 配音', description: '文案配音与情绪分析', status: 'pending' },
     { label: '自动分镜', description: '图片分配与字幕时间轴', status: 'pending' },
@@ -79,7 +79,7 @@ export function getCanvasLayout(projectType: ProjectType): LayoutResult {
   const types = getNodeTypes(projectType);
 
   // Progressive unlock: show completed + active + first pending (locked preview)
-  const activeIdx = configs.findIndex((c) => c.status === 'active');
+  const activeIdx = configs.findIndex((c) => c.status === 'generating');
   const visibleCount = activeIdx >= 0 ? Math.min(activeIdx + 2, configs.length) : configs.length;
 
   const nodes: Node[] = configs.slice(0, visibleCount).map((config, i) => ({
@@ -100,7 +100,7 @@ export function getCanvasLayout(projectType: ProjectType): LayoutResult {
     source: `node-${i}`,
     target: `node-${i + 1}`,
     type: 'smoothstep',
-    animated: configs[i].status === 'active',
+    animated: configs[i].status === 'generating',
     style: {
       stroke: configs[i].status === 'completed' ? '#C0031C' : 'rgba(255,255,255,0.15)',
       strokeWidth: 2,
