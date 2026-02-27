@@ -5,6 +5,15 @@ import { mockProjects } from '@/mock/data';
 import { visualStyles } from '@/mock/visual-styles';
 import { voices } from '@/mock/voices';
 
+interface GenerationTask {
+  task_id: string;
+  type: 'image' | 'video' | 'characters' | 'script';
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  progress: number;
+  result?: string;
+  error?: string;
+}
+
 interface ProjectStore {
   // Data
   projects: Project[];
@@ -15,6 +24,7 @@ interface ProjectStore {
   visualStyles: VisualStyle[];
   voices: Voice[];
   chatMessages: { role: 'user' | 'assistant'; content: string }[];
+  generationTasks: GenerationTask[];
 
   // Actions
   loadProjects: () => void;
@@ -24,6 +34,9 @@ interface ProjectStore {
   loadVoices: () => void;
   updateCheckPoint: (patch: Partial<CheckPoint>) => void;
   addChatMessage: (role: 'user' | 'assistant', content: string) => void;
+  addGenerationTask: (task: GenerationTask) => void;
+  updateGenerationTask: (taskId: string, patch: Partial<GenerationTask>) => void;
+  removeGenerationTask: (taskId: string) => void;
 }
 
 export const useProjectStore = create<ProjectStore>()(
@@ -36,6 +49,7 @@ export const useProjectStore = create<ProjectStore>()(
     visualStyles: [],
     voices: [],
     chatMessages: [],
+    generationTasks: [],
 
     loadProjects: () => {
       set((state) => {
@@ -115,6 +129,27 @@ export const useProjectStore = create<ProjectStore>()(
     addChatMessage: (role, content) => {
       set((state) => {
         state.chatMessages.push({ role, content });
+      });
+    },
+
+    addGenerationTask: (task) => {
+      set((state) => {
+        state.generationTasks.push(task);
+      });
+    },
+
+    updateGenerationTask: (taskId, patch) => {
+      set((state) => {
+        const task = state.generationTasks.find((t) => t.task_id === taskId);
+        if (task) {
+          Object.assign(task, patch);
+        }
+      });
+    },
+
+    removeGenerationTask: (taskId) => {
+      set((state) => {
+        state.generationTasks = state.generationTasks.filter((t) => t.task_id !== taskId);
       });
     },
   }))

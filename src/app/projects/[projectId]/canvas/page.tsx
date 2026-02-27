@@ -31,6 +31,7 @@ import { SceneDesignNode } from '@/components/canvas/nodes/scenedesign-node';
 import { SegmentDesignNode } from '@/components/canvas/nodes/segmentdesign-node';
 import { ComposeNode } from '@/components/canvas/nodes/compose-node';
 import { EntryNode } from '@/components/canvas/nodes/entry-node';
+import { GenerationTaskList } from '@/components/canvas/generation-task-list';
 import { getCanvasLayout } from '@/lib/canvas-layout';
 import { WorkflowNodeData } from '@/types/canvas';
 
@@ -257,6 +258,9 @@ const CanvasInner = React.memo(function CanvasInner() {
           onNodeComplete={handleNodeComplete}
         />
       </div>
+
+      {/* Generation Task List */}
+      <GenerationTaskList />
     </div>
   );
 });
