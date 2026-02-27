@@ -87,7 +87,10 @@ export async function generateImage(data: PoloAIImageRequest): Promise<ApiRespon
     };
   }
 
-  return post<PoloAIImageResponse>('/poloai/image', data);
+  return post<PoloAIImageResponse>('/poloai', {
+    endpoint: '/v1/images/generations',
+    ...data,
+  });
 }
 
 /**
@@ -107,7 +110,10 @@ export async function generateVideo(data: PoloAIVideoRequest): Promise<ApiRespon
     };
   }
 
-  return post<PoloAIVideoResponse>('/poloai/video', data);
+  return post<PoloAIVideoResponse>('/poloai', {
+    endpoint: '/v1/videos/generations',
+    ...data,
+  });
 }
 
 /**
@@ -129,7 +135,7 @@ export async function getTaskProgress(taskId: string): Promise<ApiResponse<TaskP
     };
   }
 
-  return get<TaskProgress>(`/poloai/task/${taskId}`);
+  return get<TaskProgress>('/poloai', { endpoint: `/v1/tasks/${taskId}` });
 }
 
 /**
@@ -162,7 +168,7 @@ export function subscribeTaskProgress(
   }
 
   // Real SSE through backend proxy
-  const eventSource = new EventSource(`${API_BASE}/poloai/task/${taskId}/stream`);
+  const eventSource = new EventSource(`${API_BASE}/poloai/task/${taskId}/stream?taskId=${taskId}`);
 
   eventSource.onmessage = (event) => {
     const data = JSON.parse(event.data);

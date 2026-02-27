@@ -83,6 +83,7 @@ export interface ComposeData extends BaseNodeData {
 
 export interface EntryNodeData extends BaseNodeData {
   isEntry: true;
+  status: 'completed' | 'pending';
 }
 
 export type WorkflowNodeData =
