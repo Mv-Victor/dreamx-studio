@@ -1,101 +1,118 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { Logo } from '@/components/ui/logo';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { Sparkles, Film, BookOpen, Music, ImageIcon } from 'lucide-react';
+import { useState } from 'react';
+import { PROJECT_TYPE_LABELS } from '@/lib/utils';
+import { ProjectType } from '@/types';
+import { useProjectStore } from '@/stores/project-store';
+
+const modeIcons: Record<string, React.ReactNode> = {
+  single_episode: <Film className="h-5 w-5" />,
+  multi_episodes: <BookOpen className="h-5 w-5" />,
+  script_based: <BookOpen className="h-5 w-5" />,
+  music_mv: <Music className="h-5 w-5" />,
+  redbook_note: <ImageIcon className="h-5 w-5" />,
+};
+
+const modeDescriptions: Record<string, string> = {
+  single_episode: '单集短视频，适合抖音/快手',
+  multi_episodes: '多集连续剧，DAG 工作流',
+  script_based: '导入已有剧本，跳过 AI 编剧',
+  music_mv: '音乐驱动的视觉创作',
+  redbook_note: '图文笔记 → 爆款视频',
+};
+
+export default function HomePage() {
+  const router = useRouter();
+  const [selectedMode, setSelectedMode] = useState<ProjectType>('single_episode');
+  const [ideaText, setIdeaText] = useState('');
+  const createProject = useProjectStore((s) => s.createProject);
+
+  const handleCreate = () => {
+    if (!ideaText.trim()) return;
+    const project = createProject(selectedMode, ideaText.trim());
+    router.push(`/projects/${project.project_id}/canvas`);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen flex flex-col">
+      {/* Nav */}
+      <nav className="flex items-center justify-between px-6 py-4 border-b border-border">
+        <Logo />
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={() => router.push('/projects')}>
+            我的项目
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => router.push('/login')}>
+            登录
+          </Button>
+        </div>
+      </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      {/* Hero */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 pb-20">
+        <div className="text-center mb-10 animate-fade-in">
+          <h1 className="text-4xl font-bold tracking-tight mb-3">
+            把你的想法
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">「玩」</span>
+            成一支视频
+          </h1>
+          <p className="text-muted-foreground text-lg">AI 驱动的全链路短剧/短视频创作平台</p>
+        </div>
+
+        {/* Mode Selector */}
+        <div className="flex flex-wrap justify-center gap-2 mb-6 animate-fade-in">
+          {(Object.keys(PROJECT_TYPE_LABELS) as ProjectType[]).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => setSelectedMode(mode)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all cursor-pointer ${
+                selectedMode === mode
+                  ? 'bg-primary/20 text-primary border border-primary/40'
+                  : 'bg-secondary text-secondary-foreground border border-transparent hover:border-border'
+              }`}
+            >
+              {modeIcons[mode]}
+              <div className="text-left">
+                <div className="font-medium">{PROJECT_TYPE_LABELS[mode]}</div>
+                <div className="text-xs opacity-70">{modeDescriptions[mode]}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Input Area */}
+        <div className="w-full max-w-2xl animate-fade-in">
+          <div className="relative rounded-xl border border-border bg-card p-1">
+            <textarea
+              value={ideaText}
+              onChange={(e) => setIdeaText(e.target.value)}
+              placeholder="描述你的创意... 例如：一个关于白骨精和唐僧的现代爱情故事"
+              className="w-full min-h-[120px] bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none resize-none"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleCreate();
+              }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="flex items-center justify-between px-3 py-2 border-t border-border">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">
+                  {PROJECT_TYPE_LABELS[selectedMode]}
+                </span>
+              </div>
+              <Button size="sm" onClick={handleCreate} disabled={!ideaText.trim()}>
+                <Sparkles className="h-4 w-4" />
+                开始创作
+              </Button>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground text-center mt-3">
+            ⌘ + Enter 快速创建 · 支持中英文输入
+          </p>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
