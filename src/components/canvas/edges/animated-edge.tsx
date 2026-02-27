@@ -25,7 +25,7 @@ export function AnimatedEdge({
   return (
     <>
       <defs>
-        <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={`edge-gradient-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="var(--drama-red)" stopOpacity="0.8" />
           <stop offset="100%" stopColor="var(--drama-red-active)" stopOpacity="0.8" />
         </linearGradient>
@@ -46,7 +46,7 @@ export function AnimatedEdge({
       {/* Animated particle */}
       <path
         d={edgePath}
-        stroke="url(#edge-gradient)"
+        stroke={`url(#edge-gradient-${id})`}
         strokeWidth={1.5}
         fill="none"
         strokeDasharray="5,5"

@@ -5,13 +5,13 @@ import type { Node, Edge } from '@xyflow/react';
 
 export type NodeType =
   | 'entry'
-  | 'checkPoint'
-  | 'storyBible'
-  | 'characterPack'
-  | 'planningCenter'
+  | 'checkpoint'
+  | 'storybible'
+  | 'characterpack'
+  | 'planningcenter'
   | 'script'
-  | 'sceneDesign'
-  | 'segmentDesign'
+  | 'scenedesign'
+  | 'segmentdesign'
   | 'compose';
 
 export type NodeStatus = 'completed' | 'generating' | 'pending' | 'locked';

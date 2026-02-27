@@ -3,6 +3,17 @@
 import { useProjectStore } from '@/stores/project-store';
 import { X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 
+/**
+ * 任务类型文案映射
+ * 便于国际化和统一维护
+ */
+const TASK_TYPE_LABELS: Record<string, string> = {
+  image: '生成图片',
+  video: '生成视频',
+  characters: '生成角色集',
+  script: '生成剧本',
+};
+
 export function GenerationTaskList() {
   const { generationTasks, removeGenerationTask } = useProjectStore();
 
@@ -32,10 +43,7 @@ export function GenerationTaskList() {
             {/* Content */}
             <div className="flex-1 min-w-0">
               <h4 className="text-sm font-medium text-white/80 capitalize">
-                {task.type === 'image' && '生成图片'}
-                {task.type === 'video' && '生成视频'}
-                {task.type === 'characters' && '生成角色集'}
-                {task.type === 'script' && '生成剧本'}
+                {TASK_TYPE_LABELS[task.type] || '生成任务'}
               </h4>
               
               {task.status === 'processing' && (
