@@ -3,6 +3,38 @@
 @tailwind utilities;
 
 :root {
+  /* Brand Colors */
+  --brand-primary: #C0031C;
+  --brand-accent: #FF4D4D;
+  --brand-primary-rgba-20: rgba(192, 3, 28, 0.20);
+  --brand-primary-rgba-25: rgba(192, 3, 28, 0.25);
+  --brand-primary-rgba-30: rgba(192, 3, 28, 0.30);
+  --brand-primary-rgba-40: rgba(192, 3, 28, 0.40);
+  --brand-primary-rgba-60: rgba(192, 3, 28, 0.60);
+  --brand-accent-rgba-15: rgba(255, 77, 77, 0.15);
+  --brand-accent-rgba-20: rgba(255, 77, 77, 0.20);
+  
+  /* Background */
+  --bg-dark: #000000;
+  --bg-card: #0a0a0f;
+  --bg-sidebar: #050505;
+  --bg-white-5: rgba(255, 255, 255, 0.05);
+  --bg-white-10: rgba(255, 255, 255, 0.10);
+  
+  /* Border */
+  --border-white-5: rgba(255, 255, 255, 0.05);
+  --border-white-10: rgba(255, 255, 255, 0.10);
+  --border-white-20: rgba(255, 255, 255, 0.20);
+  
+  /* Text */
+  --text-white-90: rgba(255, 255, 255, 0.90);
+  --text-white-80: rgba(255, 255, 255, 0.80);
+  --text-white-60: rgba(255, 255, 255, 0.60);
+  --text-white-40: rgba(255, 255, 255, 0.40);
+  --text-white-30: rgba(255, 255, 255, 0.30);
+  --text-white-20: rgba(255, 255, 255, 0.20);
+  
+  /* Semantic */
   --background: #000000;
   --foreground: rgba(255, 255, 255, 0.80);
   --card: #0a0a0a;
@@ -21,11 +53,6 @@
   --ring: #C0031C;
   --sidebar: #050505;
   --sidebar-foreground: rgba(255, 255, 255, 0.60);
-  --node-bg: #0a0a0a;
-  --node-border: rgba(255, 255, 255, 0.10);
-  --node-active: #C0031C;
-  --btn-primary-bg: rgba(192, 3, 28, 0.20);
-  --btn-primary-hover: rgba(192, 3, 28, 0.25);
 }
 
 * {

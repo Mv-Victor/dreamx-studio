@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactFlow,
@@ -53,7 +53,7 @@ export default function CanvasPage() {
   );
 }
 
-function CanvasInner() {
+const CanvasInner = React.memo(function CanvasInner() {
   const params = useParams();
   const router = useRouter();
   const projectId = params.projectId as string;
@@ -254,4 +254,6 @@ function CanvasInner() {
       </div>
     </div>
   );
-}
+});
+
+CanvasInner.displayName = 'CanvasInner';

@@ -6,6 +6,7 @@ import { Sparkles, ChevronRight, Monitor, Shield, Film, Clock, Type, Image as Im
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SegmentedControl } from '@/components/ui/segmented-control';
 
 interface CheckPointDetailProps {
   onNodeComplete?: (nodeId: string) => void;
@@ -21,65 +22,43 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
   if (!checkPoint) return null;
 
   return (
-    <div className="p-5 space-y-6">
+    <div className="p-5 space-y-5">
       {/* Language */}
       <DetailSection icon={Type} label="Language">
-        <div className="flex gap-2">
-          {['zh-CN', 'en-US'].map((lang) => (
-            <button
-              key={lang}
-              onClick={() => updateCheckPoint({ language: lang })}
-              className="flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer border"
-              style={{
-                background: checkPoint.language === lang ? 'rgba(192,3,28,0.20)' : 'rgba(255,255,255,0.05)',
-                border: checkPoint.language === lang ? 'rgba(192,3,28,0.40)' : 'rgba(255,255,255,0.10)',
-                color: checkPoint.language === lang ? '#FF4D4D' : 'rgba(255,255,255,0.60)',
-              }}
-            >
-              {lang === 'zh-CN' ? '中文' : 'English'}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={[
+            { value: 'zh-CN', label: '中文' },
+            { value: 'en-US', label: 'English' },
+          ]}
+          value={checkPoint.language as 'zh-CN' | 'en-US'}
+          onChange={(val) => updateCheckPoint({ language: val })}
+        />
       </DetailSection>
 
       {/* Rating */}
       <DetailSection icon={Shield} label="Content Rating">
-        <div className="flex gap-2">
-          {['PG', 'PG-13', 'R'].map((r) => (
-            <button
-              key={r}
-              onClick={() => updateCheckPoint({ rating: r })}
-              className="flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer border"
-              style={{
-                background: checkPoint.rating === r ? 'rgba(192,3,28,0.20)' : 'rgba(255,255,255,0.05)',
-                border: checkPoint.rating === r ? 'rgba(192,3,28,0.40)' : 'rgba(255,255,255,0.10)',
-                color: checkPoint.rating === r ? '#FF4D4D' : 'rgba(255,255,255,0.60)',
-              }}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={[
+            { value: 'PG', label: 'PG' },
+            { value: 'PG-13', label: 'PG-13' },
+            { value: 'R', label: 'R' },
+          ]}
+          value={checkPoint.rating as 'PG' | 'PG-13' | 'R'}
+          onChange={(val) => updateCheckPoint({ rating: val })}
+        />
       </DetailSection>
 
       {/* Frame Ratio */}
       <DetailSection icon={Monitor} label="Aspect Ratio">
-        <div className="flex gap-2">
-          {(['9:16', '16:9', '1:1'] as const).map((ratio) => (
-            <button
-              key={ratio}
-              onClick={() => updateCheckPoint({ camera_frame_ratio: ratio })}
-              className="flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer border"
-              style={{
-                background: checkPoint.camera_frame_ratio === ratio ? 'rgba(192,3,28,0.20)' : 'rgba(255,255,255,0.05)',
-                border: checkPoint.camera_frame_ratio === ratio ? 'rgba(192,3,28,0.40)' : 'rgba(255,255,255,0.10)',
-                color: checkPoint.camera_frame_ratio === ratio ? '#FF4D4D' : 'rgba(255,255,255,0.60)',
-              }}
-            >
-              {ratio}
-            </button>
-          ))}
-        </div>
+        <SegmentedControl
+          options={[
+            { value: '9:16', label: '9:16' },
+            { value: '16:9', label: '16:9' },
+            { value: '1:1', label: '1:1' },
+          ]}
+          value={checkPoint.camera_frame_ratio}
+          onChange={(val) => updateCheckPoint({ camera_frame_ratio: val })}
+        />
       </DetailSection>
 
       {/* Episode Count */}
@@ -91,7 +70,7 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
           value={checkPoint.episode_count}
           onChange={(e) => updateCheckPoint({ episode_count: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-          style={{ background: 'rgba(255,255,255,0.10)' }}
+          style={{ background: 'var(--bg-white-10)' }}
         />
         <div className="flex justify-between mt-1.5 text-[10px] text-white/30">
           <span>1</span>
@@ -109,7 +88,7 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
           value={checkPoint.episode_duration}
           onChange={(e) => updateCheckPoint({ episode_duration: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-          style={{ background: 'rgba(255,255,255,0.10)' }}
+          style={{ background: 'var(--bg-white-10)' }}
         />
         <div className="flex justify-between mt-1.5 text-[10px] text-white/30">
           <span>15s</span>
@@ -126,8 +105,8 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
               onClick={() => updateCheckPoint({ visual_style_id: style.id })}
               className="group rounded-lg overflow-hidden border transition-all cursor-pointer"
               style={{
-                border: checkPoint.visual_style_id === style.id ? '1px solid rgba(192,3,28,0.60)' : '1px solid rgba(255,255,255,0.10)',
-                background: checkPoint.visual_style_id === style.id ? 'rgba(192,3,28,0.10)' : 'rgba(255,255,255,0.02)',
+                border: checkPoint.visual_style_id === style.id ? '1px solid var(--brand-primary-rgba-60)' : '1px solid var(--border-white-10)',
+                background: checkPoint.visual_style_id === style.id ? 'var(--brand-primary-rgba-20)' : 'var(--bg-white-5)',
               }}
             >
               <div className="aspect-video bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center relative overflow-hidden">
@@ -159,7 +138,7 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
           onChange={(e) => updateCheckPoint({ idea_text: e.target.value })}
           placeholder="描述你的创意故事..."
           className="w-full min-h-[100px] rounded-lg border bg-white/5 px-3 py-2.5 text-xs text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 resize-none transition-colors"
-          style={{ borderColor: 'rgba(255,255,255,0.10)' }}
+          style={{ borderColor: 'var(--border-white-10)' }}
         />
       </DetailSection>
 

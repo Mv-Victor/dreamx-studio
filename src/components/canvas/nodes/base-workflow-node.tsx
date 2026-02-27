@@ -21,13 +21,13 @@ export function BaseWorkflowNode({ data, selected, icon: Icon, iconColor }: Base
   const statusColor = status === 'completed' ? 'text-green-500' : status === 'active' ? 'text-[#FF4D4D]' : 'text-white/30';
   const statusBg = status === 'completed' ? 'bg-green-500/15' : status === 'active' ? 'bg-[rgba(255,77,77,0.15)]' : 'bg-white/5';
   const borderClass = selected 
-    ? 'border-[rgba(192,3,28,0.80)] shadow-lg shadow-[rgba(192,3,28,0.25)]' 
-    : locked ? 'border-white/5' : 'border-white/10';
+    ? 'border-[var(--brand-primary-rgba-60)] shadow-lg shadow-[rgba(192,3,28,0.25)]' 
+    : locked ? 'border-[var(--border-white-5)]' : 'border-[var(--border-white-10)]';
   const bgClass = locked ? 'bg-white/[0.02]' : 'bg-[#0a0a0a]';
 
   return (
     <div className={cn(
-      'w-[240px] rounded-xl border px-4 py-3.5 transition-all duration-200',
+      'w-[240px] rounded-xl border-[1.5px] px-4 py-3.5 transition-all duration-200',
       borderClass,
       bgClass,
       status === 'active' && 'animate-pulse-glow'

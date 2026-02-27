@@ -31,13 +31,10 @@ export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: Detai
   return (
     <div className="w-[360px] border-l border-white/10 bg-[#0a0a0f] flex flex-col animate-slide-right">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="flex items-center gap-2.5">
-          <div className="w-1 h-4 rounded-full bg-[#C0031C]" />
-          <div>
-            <h3 className="text-sm font-semibold text-white/90 capitalize">{selectedNodeType.replace(/([A-Z])/g, ' $1').trim()}</h3>
-            <p className="text-[10px] text-white/40 mt-0.5">配置节点参数</p>
-          </div>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-white-10)] bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-3.5 rounded-full bg-[var(--brand-primary)]" />
+          <h3 className="text-sm font-semibold text-white/90 capitalize">{selectedNodeType.replace(/([A-Z])/g, ' $1').trim()}</h3>
         </div>
         <button
           onClick={onClose}

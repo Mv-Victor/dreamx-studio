@@ -24,6 +24,13 @@ export function AnimatedEdge({
 
   return (
     <>
+      <defs>
+        <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#C0031C" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#FF4D4D" stopOpacity="0.8" />
+        </linearGradient>
+      </defs>
+      
       {/* Base path */}
       <path
         id={id}
@@ -32,14 +39,15 @@ export function AnimatedEdge({
         d={edgePath}
         markerEnd={markerEnd}
         stroke="rgba(255,255,255,0.15)"
-        strokeWidth={2}
+        strokeWidth={1.5}
         fill="none"
       />
+      
       {/* Animated particle */}
       <path
         d={edgePath}
-        stroke="url(#gradient)"
-        strokeWidth={2}
+        stroke="url(#edge-gradient)"
+        strokeWidth={1.5}
         fill="none"
         strokeDasharray="5,5"
         className="animate-flow"
