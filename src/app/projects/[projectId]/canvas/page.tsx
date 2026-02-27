@@ -86,8 +86,11 @@ const CanvasInner = React.memo(function CanvasInner() {
   // 只在首次加载时设置节点，避免重置用户进度
   useEffect(() => {
     if (initialLoadRef.current) {
+      // 安全处理 projectId，避免特殊字符导致 localStorage 键问题
+      const safeProjectId = projectId.replace(/[^a-zA-Z0-9_-]/g, '_');
+      
       // 尝试从 localStorage 恢复节点位置
-      const savedPositions = localStorage.getItem(`dreamx-nodes-${projectId}`);
+      const savedPositions = localStorage.getItem(`dreamx-nodes-${safeProjectId}`);
       if (savedPositions) {
         try {
           const positions = JSON.parse(savedPositions);
@@ -104,7 +107,7 @@ const CanvasInner = React.memo(function CanvasInner() {
       }
 
       // 尝试从 localStorage 恢复视口
-      const savedViewport = localStorage.getItem(`dreamx-viewport-${projectId}`);
+      const savedViewport = localStorage.getItem(`dreamx-viewport-${safeProjectId}`);
       if (savedViewport) {
         try {
           const viewport: Viewport = JSON.parse(savedViewport);
@@ -140,22 +143,24 @@ const CanvasInner = React.memo(function CanvasInner() {
   // 保存节点位置到 localStorage
   useEffect(() => {
     if (!initialLoadRef.current && nodes.length > 0) {
+      const safeProjectId = projectId.replace(/[^a-zA-Z0-9_-]/g, '_');
       if (viewportSaveRef.current) clearTimeout(viewportSaveRef.current);
       viewportSaveRef.current = setTimeout(() => {
         const positions: Record<string, { x: number; y: number }> = {};
         nodes.forEach((node) => {
           positions[node.id] = { x: node.position.x, y: node.position.y };
         });
-        localStorage.setItem(`dreamx-nodes-${projectId}`, JSON.stringify(positions));
+        localStorage.setItem(`dreamx-nodes-${safeProjectId}`, JSON.stringify(positions));
       }, 500);
     }
   }, [nodes, projectId]);
 
   // 保存视口状态到 localStorage
   const onViewportChange = useCallback((viewport: Viewport) => {
+    const safeProjectId = projectId.replace(/[^a-zA-Z0-9_-]/g, '_');
     if (viewportSaveRef.current) clearTimeout(viewportSaveRef.current);
     viewportSaveRef.current = setTimeout(() => {
-      localStorage.setItem(`dreamx-viewport-${projectId}`, JSON.stringify(viewport));
+      localStorage.setItem(`dreamx-viewport-${safeProjectId}`, JSON.stringify(viewport));
     }, 500);
   }, [projectId]);
 
