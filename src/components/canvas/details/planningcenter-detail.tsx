@@ -2,19 +2,12 @@
 
 import { Sparkles, LayoutGrid, Image as ImageIcon, Film, Eye } from 'lucide-react';
 import { useState } from 'react';
+import { DetailSection } from '@/components/ui/detail-section';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export function PlanningCenterDetail() {
   const [activeTab, setActiveTab] = useState('overview');
-
-  const Section = ({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children: React.ReactNode }) => (
-    <div className="mb-5">
-      <div className="flex items-center gap-2 mb-2.5">
-        <Icon className="h-4 w-4 text-white/40" />
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">{label}</span>
-      </div>
-      {children}
-    </div>
-  );
 
   const tabs = [
     { id: 'overview', label: '概览' },
@@ -49,7 +42,7 @@ export function PlanningCenterDetail() {
       </div>
 
       {activeTab === 'overview' && (
-        <Section icon={LayoutGrid} label="Overview">
+        <DetailSection icon={LayoutGrid} label="Overview">
           <div className="rounded-lg border border-white/10 bg-white/5 p-3 mb-3">
             <h4 className="text-[10px] text-white/40 mb-1">核心叙事</h4>
             <p className="text-xs text-white/70 leading-relaxed">
@@ -57,15 +50,15 @@ export function PlanningCenterDetail() {
             </p>
           </div>
           <div className="flex gap-2">
-            <span className="text-[10px] px-2 py-1 rounded" style={{ background: 'rgba(192,3,28,0.20)', color: '#FF4D4D' }}>奇幻</span>
-            <span className="text-[10px] px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.40)' }}>爱情</span>
-            <span className="text-[10px] px-2 py-1 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.40)' }}>古装</span>
+            <Badge variant="default">奇幻</Badge>
+            <Badge variant="secondary">爱情</Badge>
+            <Badge variant="secondary">古装</Badge>
           </div>
-        </Section>
+        </DetailSection>
       )}
 
       {activeTab === 'cover' && (
-        <Section icon={ImageIcon} label="Cover">
+        <DetailSection icon={ImageIcon} label="Cover">
           <div className="aspect-[3/4] rounded-lg border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center mb-3">
             <div className="text-center">
               <ImageIcon className="h-8 w-8 text-white/20 mx-auto mb-2" />
@@ -73,24 +66,18 @@ export function PlanningCenterDetail() {
             </div>
           </div>
           <div className="flex gap-2">
-            <button
-              className="flex-1 py-2 rounded-lg text-[10px] font-medium transition-all cursor-pointer border border-white/10"
-              style={{ background: 'transparent', color: 'rgba(255,255,255,0.60)' }}
-            >
+            <Button variant="outline" size="sm" className="flex-1">
               重新生成
-            </button>
-            <button
-              className="flex-1 py-2 rounded-lg text-[10px] font-medium transition-all cursor-pointer border border-white/10"
-              style={{ background: 'transparent', color: 'rgba(255,255,255,0.60)' }}
-            >
+            </Button>
+            <Button variant="outline" size="sm" className="flex-1">
               上传参考
-            </button>
+            </Button>
           </div>
-        </Section>
+        </DetailSection>
       )}
 
       {activeTab === 'episodes' && (
-        <Section icon={Film} label="Episodes">
+        <DetailSection icon={Film} label="Episodes">
           <div className="space-y-2">
             {mockEpisodes.map((ep, i) => (
               <div
@@ -108,24 +95,21 @@ export function PlanningCenterDetail() {
                 </div>
                 <p className="text-[10px] text-white/40 leading-relaxed line-clamp-2">{ep.summary}</p>
                 <div className="mt-2">
-                  <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.30)' }}>
+                  <Badge variant="outline">
                     {ep.sceneCount} 个场景
-                  </span>
+                  </Badge>
                 </div>
               </div>
             ))}
           </div>
-        </Section>
+        </DetailSection>
       )}
 
       {/* Action Button */}
-      <button
-        className="w-full py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-2"
-        style={{ background: 'rgba(192,3,28,0.20)', color: '#FF4D4D' }}
-      >
+      <Button variant="default" size="sm" className="w-full">
         <Sparkles className="h-3.5 w-3.5" />
         确认规划
-      </button>
+      </Button>
     </div>
   );
 }

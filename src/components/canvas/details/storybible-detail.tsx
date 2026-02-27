@@ -1,6 +1,9 @@
 'use client';
 
 import { Sparkles, RefreshCw, BookOpen } from 'lucide-react';
+import { DetailSection } from '@/components/ui/detail-section';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 const mockStoryBibles = [
   {
@@ -30,25 +33,15 @@ const mockStoryBibles = [
 ];
 
 export function StoryBibleDetail() {
-  const Section = ({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children: React.ReactNode }) => (
-    <div className="mb-5">
-      <div className="flex items-center gap-2 mb-2.5">
-        <Icon className="h-4 w-4 text-white/40" />
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">{label}</span>
-      </div>
-      {children}
-    </div>
-  );
-
   return (
     <div className="p-4 space-y-4">
-      <Section icon={BookOpen} label="Story Options">
+      <DetailSection icon={BookOpen} label="Story Options">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-white/40">AI 生成了 {mockStoryBibles.length} 个故事方案</p>
-          <button className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] text-white/60 hover:text-white/80 cursor-pointer transition-colors" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <Button variant="secondary" size="sm">
             <RefreshCw className="h-3 w-3" />
             重新生成
-          </button>
+          </Button>
         </div>
 
         <div className="space-y-3">
@@ -63,15 +56,9 @@ export function StoryBibleDetail() {
             >
               <div className="flex items-center justify-between mb-2">
                 <h4 className="text-sm font-medium text-white/80">{story.title}</h4>
-                <span
-                  className="text-[10px] px-1.5 py-0.5 rounded"
-                  style={{
-                    background: story.selected ? 'rgba(192,3,28,0.20)' : 'rgba(255,255,255,0.05)',
-                    color: story.selected ? '#FF4D4D' : 'rgba(255,255,255,0.40)',
-                  }}
-                >
+                <Badge variant={story.selected ? 'default' : 'secondary'}>
                   {story.genre}
-                </span>
+                </Badge>
               </div>
               <p className="text-[10px] text-[#FF4D4D] mb-2">{story.logline}</p>
               <p className="text-[10px] text-white/50 leading-relaxed line-clamp-3">{story.synopsis}</p>
@@ -84,23 +71,17 @@ export function StoryBibleDetail() {
             </div>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Action Buttons */}
       <div className="flex gap-2 pt-2">
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer border border-white/10"
-          style={{ background: 'transparent', color: 'rgba(255,255,255,0.60)' }}
-        >
+        <Button variant="outline" size="sm" className="flex-1">
           重新生成
-        </button>
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-2"
-          style={{ background: 'rgba(192,3,28,0.20)', color: '#FF4D4D' }}
-        >
+        </Button>
+        <Button variant="default" size="sm" className="flex-1">
           <Sparkles className="h-3.5 w-3.5" />
           确认选择
-        </button>
+        </Button>
       </div>
     </div>
   );

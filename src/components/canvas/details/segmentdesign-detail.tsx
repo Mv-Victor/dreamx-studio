@@ -1,6 +1,10 @@
 'use client';
 
 import { Sparkles, RefreshCw, Clapperboard, Lock, Play } from 'lucide-react';
+import { DetailSection } from '@/components/ui/detail-section';
+import { Button } from '@/components/ui/button';
+import { StatusBadge } from '@/components/ui/status-badge';
+import { Badge } from '@/components/ui/badge';
 
 const mockSegments = [
   { id: 1, description: '夕阳下的荒山古道，镜头缓缓推进', shotType: '远景', camera: '推镜头', duration: '4s', status: 'completed' as const },
@@ -11,34 +15,9 @@ const mockSegments = [
 ];
 
 export function SegmentDesignDetail() {
-  const Section = ({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children: React.ReactNode }) => (
-    <div className="mb-5">
-      <div className="flex items-center gap-2 mb-2.5">
-        <Icon className="h-4 w-4 text-white/40" />
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">{label}</span>
-      </div>
-      {children}
-    </div>
-  );
-
-  const StatusBadge = ({ status }: { status: 'completed' | 'generating' | 'pending' }) => {
-    if (status === 'completed') {
-      return <span className="text-[10px] text-green-500">✓ 完成</span>;
-    }
-    if (status === 'generating') {
-      return (
-        <span className="inline-flex items-center gap-1 text-[10px] text-[#FF4D4D]">
-          <span className="w-2.5 h-2.5 border-2 border-[#FF4D4D] border-t-transparent rounded-full animate-spin" />
-          生成中
-        </span>
-      );
-    }
-    return <span className="inline-flex items-center gap-1 text-[10px] text-white/40"><Lock className="h-2.5 w-2.5" /> 待生成</span>;
-  };
-
   return (
     <div className="p-4 space-y-4">
-      <Section icon={Clapperboard} label="Segments">
+      <DetailSection icon={Clapperboard} label="Segments">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-white/40">{mockSegments.length} 个分镜</p>
           <div className="flex items-center gap-1 text-xs text-white/40">
@@ -70,8 +49,8 @@ export function SegmentDesignDetail() {
               <div className="flex-1 min-w-0">
                 <p className="text-[10px] text-white/70 leading-relaxed line-clamp-2">{seg.description}</p>
                 <div className="flex items-center gap-1.5 mt-1.5">
-                  <span className="text-[9px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.40)' }}>{seg.shotType}</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.40)' }}>{seg.camera}</span>
+                  <Badge variant="outline">{seg.shotType}</Badge>
+                  <Badge variant="outline">{seg.camera}</Badge>
                   <div className="ml-auto">
                     <StatusBadge status={seg.status} />
                   </div>
@@ -80,24 +59,18 @@ export function SegmentDesignDetail() {
             </div>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Action Buttons */}
       <div className="flex gap-2 pt-2">
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer border border-white/10 flex items-center justify-center gap-2"
-          style={{ background: 'transparent', color: 'rgba(255,255,255,0.60)' }}
-        >
+        <Button variant="outline" size="sm" className="flex-1">
           <RefreshCw className="h-3.5 w-3.5" />
           重新生成
-        </button>
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-2"
-          style={{ background: 'rgba(192,3,28,0.20)', color: '#FF4D4D' }}
-        >
+        </Button>
+        <Button variant="default" size="sm" className="flex-1">
           <Sparkles className="h-3.5 w-3.5" />
           确认分镜
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -3,6 +3,9 @@
 import { useProjectStore } from '@/stores/project-store';
 import { useEffect } from 'react';
 import { Sparkles, ChevronRight, Monitor, Shield, Film, Clock, Type, Image as ImageIcon, FileText } from 'lucide-react';
+import { DetailSection } from '@/components/ui/detail-section';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export function CheckPointDetail() {
   const { checkPoint, updateCheckPoint, visualStyles, loadVisualStyles } = useProjectStore();
@@ -13,20 +16,10 @@ export function CheckPointDetail() {
 
   if (!checkPoint) return null;
 
-  const Section = ({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children: React.ReactNode }) => (
-    <div className="mb-5">
-      <div className="flex items-center gap-2 mb-2.5">
-        <Icon className="h-4 w-4 text-white/40" />
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">{label}</span>
-      </div>
-      {children}
-    </div>
-  );
-
   return (
     <div className="p-5 space-y-6">
       {/* Language */}
-      <Section icon={Type} label="Language">
+      <DetailSection icon={Type} label="Language">
         <div className="flex gap-2">
           {['zh-CN', 'en-US'].map((lang) => (
             <button
@@ -43,10 +36,10 @@ export function CheckPointDetail() {
             </button>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Rating */}
-      <Section icon={Shield} label="Content Rating">
+      <DetailSection icon={Shield} label="Content Rating">
         <div className="flex gap-2">
           {['PG', 'PG-13', 'R'].map((r) => (
             <button
@@ -63,10 +56,10 @@ export function CheckPointDetail() {
             </button>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Frame Ratio */}
-      <Section icon={Monitor} label="Aspect Ratio">
+      <DetailSection icon={Monitor} label="Aspect Ratio">
         <div className="flex gap-2">
           {(['9:16', '16:9', '1:1'] as const).map((ratio) => (
             <button
@@ -83,10 +76,10 @@ export function CheckPointDetail() {
             </button>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Episode Count */}
-      <Section icon={Film} label={`Episodes: ${checkPoint.episode_count}`}>
+      <DetailSection icon={Film} label={`Episodes: ${checkPoint.episode_count}`}>
         <input
           type="range"
           min={1}
@@ -100,10 +93,10 @@ export function CheckPointDetail() {
           <span>1</span>
           <span>12</span>
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Episode Duration */}
-      <Section icon={Clock} label={`Duration: ${checkPoint.episode_duration}s`}>
+      <DetailSection icon={Clock} label={`Duration: ${checkPoint.episode_duration}s`}>
         <input
           type="range"
           min={15}
@@ -118,10 +111,10 @@ export function CheckPointDetail() {
           <span>15s</span>
           <span>300s</span>
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Visual Style */}
-      <Section icon={ImageIcon} label="Visual Style">
+      <DetailSection icon={ImageIcon} label="Visual Style">
         <div className="grid grid-cols-2 gap-2">
           {visualStyles.slice(0, 4).map((style) => (
             <button
@@ -143,9 +136,9 @@ export function CheckPointDetail() {
               </div>
               <div className="px-2 py-2">
                 <p className="text-[10px] font-medium text-white/80 truncate">{style.title}</p>
-                <span className="mt-1 inline-flex items-center rounded-full border border-white/15 px-2 py-0.5 text-[9px] h-4 text-white/40">
+                <Badge variant="outline" className="mt-1">
                   {style.type}
-                </span>
+                </Badge>
               </div>
             </button>
           ))}
@@ -153,10 +146,10 @@ export function CheckPointDetail() {
         <button className="w-full mt-2 text-[10px] text-white/40 hover:text-white/60 transition-colors flex items-center justify-center gap-1 cursor-pointer">
           查看全部风格 <ChevronRight className="h-3 w-3" />
         </button>
-      </Section>
+      </DetailSection>
 
       {/* Idea Text */}
-      <Section icon={FileText} label="Story Idea">
+      <DetailSection icon={FileText} label="Story Idea">
         <textarea
           value={checkPoint.idea_text}
           onChange={(e) => updateCheckPoint({ idea_text: e.target.value })}
@@ -164,21 +157,13 @@ export function CheckPointDetail() {
           className="w-full min-h-[100px] rounded-lg border bg-white/5 px-3 py-2.5 text-xs text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 resize-none transition-colors"
           style={{ borderColor: 'rgba(255,255,255,0.10)' }}
         />
-      </Section>
+      </DetailSection>
 
       {/* Action Button */}
-      <button
-        className="w-full py-3 rounded-lg text-sm font-medium transition-all cursor-pointer flex items-center justify-center gap-2"
-        style={{
-          background: 'rgba(192,3,28,0.20)',
-          color: '#FF4D4D',
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(192,3,28,0.25)'}
-        onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(192,3,28,0.20)'}
-      >
+      <Button variant="default" size="sm" className="w-full">
         <Sparkles className="h-4 w-4" />
         确认并继续
-      </button>
+      </Button>
     </div>
   );
 }

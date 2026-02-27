@@ -3,6 +3,9 @@
 import { useProjectStore } from '@/stores/project-store';
 import { useEffect } from 'react';
 import { Sparkles, Volume2, Plus, User } from 'lucide-react';
+import { DetailSection } from '@/components/ui/detail-section';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export function CharacterPackDetail() {
   const { characters, voices, loadVoices } = useProjectStore();
@@ -11,25 +14,27 @@ export function CharacterPackDetail() {
     if (voices.length === 0) loadVoices();
   }, [voices.length, loadVoices]);
 
-  const Section = ({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children: React.ReactNode }) => (
-    <div className="mb-5">
-      <div className="flex items-center gap-2 mb-2.5">
-        <Icon className="h-4 w-4 text-white/40" />
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wide">{label}</span>
+  if (!characters || characters.length === 0) {
+    return (
+      <div className="p-5 text-center">
+        <p className="text-sm text-white/40 mb-4">暂无角色数据</p>
+        <Button variant="default" size="sm">
+          <Sparkles className="h-3.5 w-3.5" />
+          生成角色集
+        </Button>
       </div>
-      {children}
-    </div>
-  );
+    );
+  }
 
   return (
     <div className="p-4 space-y-4">
-      <Section icon={User} label="Characters">
+      <DetailSection icon={User} label="Characters">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs text-white/40">{characters.length} 个角色</span>
-          <button className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] text-white/60 hover:text-white/80 cursor-pointer transition-colors" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <Button variant="secondary" size="sm">
             <Plus className="h-3 w-3" />
             添加角色
-          </button>
+          </Button>
         </div>
 
         <div className="space-y-3">
@@ -50,15 +55,9 @@ export function CharacterPackDetail() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-medium text-white/80">{char.name}</h4>
-                    <span
-                      className="text-[10px] px-1.5 py-0.5 rounded"
-                      style={{
-                        background: char.level === 'major' ? 'rgba(192,3,28,0.20)' : 'rgba(255,255,255,0.05)',
-                        color: char.level === 'major' ? '#FF4D4D' : 'rgba(255,255,255,0.40)',
-                      }}
-                    >
+                    <Badge variant={char.level === 'major' ? 'default' : 'secondary'}>
                       {char.level === 'major' ? '主角' : char.level === 'supporting' ? '配角' : '龙套'}
-                    </span>
+                    </Badge>
                   </div>
                   <p className="text-[10px] text-white/40 mt-0.5">{char.occupation}</p>
                   <div className="flex gap-1.5 mt-1 text-[10px] text-white/30">
@@ -86,23 +85,17 @@ export function CharacterPackDetail() {
             </div>
           ))}
         </div>
-      </Section>
+      </DetailSection>
 
       {/* Action Buttons */}
       <div className="flex gap-2 pt-2">
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer border border-white/10"
-          style={{ background: 'transparent', color: 'rgba(255,255,255,0.60)' }}
-        >
+        <Button variant="outline" size="sm" className="flex-1">
           重新生成
-        </button>
-        <button
-          className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-2"
-          style={{ background: 'rgba(192,3,28,0.20)', color: '#FF4D4D' }}
-        >
+        </Button>
+        <Button variant="default" size="sm" className="flex-1">
           <Sparkles className="h-3.5 w-3.5" />
           确认角色集
-        </button>
+        </Button>
       </div>
     </div>
   );
