@@ -99,8 +99,7 @@ export function getCanvasLayout(projectType: ProjectType): LayoutResult {
     id: `edge-${i}-${i + 1}`,
     source: `node-${i}`,
     target: `node-${i + 1}`,
-    type: 'smoothstep',
-    animated: configs[i].status === 'active',
+    type: 'animated',
     style: {
       stroke: configs[i].status === 'completed' ? 'var(--primary)' : 'rgba(255,255,255,0.10)',
       strokeWidth: 2,

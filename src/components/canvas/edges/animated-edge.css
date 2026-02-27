@@ -1,0 +1,9 @@
+.animate-flow {
+  animation: flowAnimation 1s linear infinite;
+}
+
+@keyframes flowAnimation {
+  to {
+    stroke-dashoffset: -10;
+  }
+}

@@ -15,6 +15,7 @@ import {
   useReactFlow,
   Connection,
   Edge,
+  Viewport,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useProjectStore } from '@/stores/project-store';
@@ -30,7 +31,9 @@ import { SceneDesignNode } from '@/components/canvas/nodes/scenedesign-node';
 import { SegmentDesignNode } from '@/components/canvas/nodes/segmentdesign-node';
 import { ComposeNode } from '@/components/canvas/nodes/compose-node';
 import { EntryNode } from '@/components/canvas/nodes/entry-node';
+import { AnimatedEdge } from '@/components/canvas/edges/animated-edge';
 import { getCanvasLayout } from '@/lib/canvas-layout';
+import '@/components/canvas/edges/animated-edge.css';
 
 const nodeTypes = {
   entry: EntryNode,
@@ -42,6 +45,10 @@ const nodeTypes = {
   scenedesign: SceneDesignNode,
   segmentdesign: SegmentDesignNode,
   compose: ComposeNode,
+};
+
+const edgeTypes = {
+  animated: AnimatedEdge,
 };
 
 export default function CanvasPage() {
@@ -59,8 +66,9 @@ function CanvasInner() {
   const { projects, selectProject, currentProject, loadProjects } = useProjectStore();
   const [selectedNodeType, setSelectedNodeType] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(true);
-  const { updateNodeData, getNodes } = useReactFlow();
+  const { updateNodeData, getNodes, setViewport } = useReactFlow();
   const initialLoadRef = useRef(true);
+  const viewportSaveRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (projects.length === 0) loadProjects();
@@ -82,8 +90,34 @@ function CanvasInner() {
   // 只在首次加载时设置节点，避免重置用户进度
   useEffect(() => {
     if (initialLoadRef.current) {
-      setNodes(initialNodes);
-      setEdges(initialEdges);
+      // 尝试从 localStorage 恢复节点位置
+      const savedPositions = localStorage.getItem(`dreamx-nodes-${projectId}`);
+      if (savedPositions) {
+        try {
+          const positions = JSON.parse(savedPositions);
+          const nodesWithPositions = initialNodes.map((node) => ({
+            ...node,
+            position: positions[node.id] || node.position,
+          }));
+          setNodes(nodesWithPositions);
+        } catch {
+          setNodes(initialNodes);
+        }
+      } else {
+        setNodes(initialNodes);
+      }
+
+      // 尝试从 localStorage 恢复视口
+      const savedViewport = localStorage.getItem(`dreamx-viewport-${projectId}`);
+      if (savedViewport) {
+        try {
+          const viewport: Viewport = JSON.parse(savedViewport);
+          setViewport(viewport);
+        } catch {
+          // ignore
+        }
+      }
+
       initialLoadRef.current = false;
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -104,6 +138,28 @@ function CanvasInner() {
       setEdges(initialEdges);
     }
   }, [initialNodes, initialEdges]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 保存节点位置到 localStorage
+  useEffect(() => {
+    if (!initialLoadRef.current && nodes.length > 0) {
+      if (viewportSaveRef.current) clearTimeout(viewportSaveRef.current);
+      viewportSaveRef.current = setTimeout(() => {
+        const positions: Record<string, { x: number; y: number }> = {};
+        nodes.forEach((node) => {
+          positions[node.id] = { x: node.position.x, y: node.position.y };
+        });
+        localStorage.setItem(`dreamx-nodes-${projectId}`, JSON.stringify(positions));
+      }, 500);
+    }
+  }, [nodes, projectId]);
+
+  // 保存视口状态到 localStorage
+  const onViewportChange = useCallback((viewport: Viewport) => {
+    if (viewportSaveRef.current) clearTimeout(viewportSaveRef.current);
+    viewportSaveRef.current = setTimeout(() => {
+      localStorage.setItem(`dreamx-viewport-${projectId}`, JSON.stringify(viewport));
+    }, 500);
+  }, [projectId]);
 
   // 连接验证：只允许从上到下顺序连接
   const isValidConnection = useCallback(
@@ -177,7 +233,9 @@ function CanvasInner() {
             onEdgesChange={onEdgesChange}
             onNodeClick={onNodeClick}
             onPaneClick={onPaneClick}
+            onViewportChange={onViewportChange}
             nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
             isValidConnection={isValidConnection}
             fitView
             fitViewOptions={{ padding: 0.3 }}
