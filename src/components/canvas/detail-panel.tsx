@@ -30,10 +30,14 @@ export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: Detai
 
   return (
     <div className="w-[360px] border-l border-white/10 bg-[#0a0a0f] flex flex-col animate-slide-right">
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0">
-        <div>
-          <h3 className="text-sm font-semibold text-white/90 capitalize">{selectedNodeType.replace(/([A-Z])/g, ' $1').trim()}</h3>
-          <p className="text-[10px] text-white/40 mt-0.5">配置节点参数</p>
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="flex items-center gap-2.5">
+          <div className="w-1 h-4 rounded-full bg-[#C0031C]" />
+          <div>
+            <h3 className="text-sm font-semibold text-white/90 capitalize">{selectedNodeType.replace(/([A-Z])/g, ' $1').trim()}</h3>
+            <p className="text-[10px] text-white/40 mt-0.5">配置节点参数</p>
+          </div>
         </div>
         <button
           onClick={onClose}
@@ -42,6 +46,8 @@ export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: Detai
           <X className="h-4 w-4 text-white/40" />
         </button>
       </div>
+      
+      {/* Content */}
       <div className="flex-1 overflow-y-auto">
         {selectedNodeType === 'checkpoint' && <CheckPointDetail onNodeComplete={onNodeComplete} />}
         {selectedNodeType === 'storybible' && <StoryBibleDetail />}

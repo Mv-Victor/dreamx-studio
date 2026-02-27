@@ -99,9 +99,10 @@ export function getCanvasLayout(projectType: ProjectType): LayoutResult {
     id: `edge-${i}-${i + 1}`,
     source: `node-${i}`,
     target: `node-${i + 1}`,
-    type: 'animated',
+    type: 'smoothstep',
+    animated: configs[i].status === 'active',
     style: {
-      stroke: configs[i].status === 'completed' ? 'var(--primary)' : 'rgba(255,255,255,0.10)',
+      stroke: configs[i].status === 'completed' ? '#C0031C' : 'rgba(255,255,255,0.15)',
       strokeWidth: 2,
     },
   }));

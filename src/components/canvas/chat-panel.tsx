@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useProjectStore } from '@/stores/project-store';
-import { Send, Bot, User } from 'lucide-react';
+import { Send, Bot, User, Sparkles } from 'lucide-react';
 
 export function ChatPanel() {
   const { chatMessages, addChatMessage } = useProjectStore();
@@ -37,54 +37,64 @@ export function ChatPanel() {
   };
 
   return (
-    <div className="w-[320px] border-r border-border flex flex-col bg-sidebar animate-slide-left">
+    <div className="w-[360px] border-r border-white/10 flex flex-col bg-[#050505] animate-slide-left">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-border">
-        <h3 className="text-sm font-medium">AI 创作助手</h3>
-        <p className="text-xs text-muted-foreground mt-0.5">与 AI 协作，引导创作方向</p>
+      <div className="px-5 py-4 border-b border-white/10 bg-[#050505]/80 backdrop-blur-sm">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-[rgba(192,3,28,0.15)] flex items-center justify-center">
+            <Bot className="h-4 w-4 text-[#FF4D4D]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-white/90">AI 创作助手</h3>
+            <p className="text-[10px] text-white/40 mt-0.5">与 AI 协作，引导创作方向</p>
+          </div>
+        </div>
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
         {chatMessages.length === 0 && (
-          <div className="text-center py-8">
-            <Bot className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-            <p className="text-xs text-muted-foreground">开始对话，让 AI 帮你创作</p>
+          <div className="text-center py-12">
+            <div className="w-12 h-12 rounded-xl bg-[rgba(192,3,28,0.10)] flex items-center justify-center mx-auto mb-3">
+              <Sparkles className="h-6 w-6 text-[#FF4D4D]" />
+            </div>
+            <p className="text-sm text-white/60 font-medium">开始对话</p>
+            <p className="text-xs text-white/30 mt-1">让 AI 帮你创作更精彩的故事</p>
           </div>
         )}
         {chatMessages.map((msg, i) => (
-          <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+          <div key={i} className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : ''}`}>
             {msg.role === 'assistant' && (
-              <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Bot className="h-3.5 w-3.5 text-primary" />
+              <div className="w-7 h-7 rounded-lg bg-[rgba(192,3,28,0.15)] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Bot className="h-3.5 w-3.5 text-[#FF4D4D]" />
               </div>
             )}
             <div
-              className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+              className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-foreground'
+                  ? 'bg-[rgba(192,3,28,0.20)] text-white/90 border border-[rgba(192,3,28,0.30)]'
+                  : 'bg-[rgba(255,255,255,0.05)] text-white/80 border border-white/5'
               }`}
             >
               {msg.content}
             </div>
             {msg.role === 'user' && (
-              <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <User className="h-3.5 w-3.5 text-accent" />
+              <div className="w-7 h-7 rounded-lg bg-[rgba(255,77,77,0.15)] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <User className="h-3.5 w-3.5 text-[#FF4D4D]" />
               </div>
             )}
           </div>
         ))}
         {isTyping && (
-          <div className="flex gap-2">
-            <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-              <Bot className="h-3.5 w-3.5 text-primary" />
+          <div className="flex gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-[rgba(192,3,28,0.15)] flex items-center justify-center flex-shrink-0">
+              <Bot className="h-3.5 w-3.5 text-[#FF4D4D]" />
             </div>
-            <div className="bg-muted rounded-lg px-3 py-2 text-sm text-muted-foreground">
+            <div className="bg-[rgba(255,255,255,0.05)] border border-white/5 rounded-xl px-3.5 py-2.5">
               <span className="inline-flex gap-1">
-                <span className="animate-bounce" style={{ animationDelay: '0ms' }}>·</span>
-                <span className="animate-bounce" style={{ animationDelay: '150ms' }}>·</span>
-                <span className="animate-bounce" style={{ animationDelay: '300ms' }}>·</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '150ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '300ms' }} />
               </span>
             </div>
           </div>
@@ -92,16 +102,21 @@ export function ChatPanel() {
       </div>
 
       {/* Input */}
-      <div className="px-3 py-3 border-t border-border">
+      <div className="px-5 py-4 border-t border-white/10 bg-[#050505]/80 backdrop-blur-sm">
         <div className="flex gap-2">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
-            placeholder="输入消息..."
-            className="flex-1 h-9 rounded-md border border-input bg-muted px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            placeholder="输入消息，与 AI 协作..."
+            className="flex-1 h-10 rounded-xl border border-white/10 bg-[rgba(255,255,255,0.05)] px-4 text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[rgba(192,3,28,0.40)] focus:ring-1 focus:ring-[rgba(192,3,28,0.20)] transition-all"
           />
-          <Button size="icon" onClick={handleSend} disabled={!input.trim() || isTyping} className="h-9 w-9">
+          <Button 
+            size="icon" 
+            onClick={handleSend} 
+            disabled={!input.trim() || isTyping} 
+            className="h-10 w-10 rounded-xl bg-[rgba(192,3,28,0.20)] hover:bg-[rgba(192,3,28,0.25)] border border-[rgba(192,3,28,0.30)]"
+          >
             <Send className="h-4 w-4" />
           </Button>
         </div>

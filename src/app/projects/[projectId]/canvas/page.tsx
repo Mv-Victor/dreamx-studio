@@ -31,9 +31,7 @@ import { SceneDesignNode } from '@/components/canvas/nodes/scenedesign-node';
 import { SegmentDesignNode } from '@/components/canvas/nodes/segmentdesign-node';
 import { ComposeNode } from '@/components/canvas/nodes/compose-node';
 import { EntryNode } from '@/components/canvas/nodes/entry-node';
-import { AnimatedEdge } from '@/components/canvas/edges/animated-edge';
 import { getCanvasLayout } from '@/lib/canvas-layout';
-import '@/components/canvas/edges/animated-edge.css';
 
 const nodeTypes = {
   entry: EntryNode,
@@ -45,10 +43,6 @@ const nodeTypes = {
   scenedesign: SceneDesignNode,
   segmentdesign: SegmentDesignNode,
   compose: ComposeNode,
-};
-
-const edgeTypes = {
-  animated: AnimatedEdge,
 };
 
 export default function CanvasPage() {
@@ -235,7 +229,6 @@ function CanvasInner() {
             onPaneClick={onPaneClick}
             onViewportChange={onViewportChange}
             nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
             isValidConnection={isValidConnection}
             fitView
             fitViewOptions={{ padding: 0.3 }}
