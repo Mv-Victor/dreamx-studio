@@ -3,7 +3,12 @@
 import { NodeProps } from '@xyflow/react';
 import { Users } from 'lucide-react';
 import { BaseWorkflowNode } from './base-workflow-node';
+import { BaseWorkflowNodeData } from '@/types/canvas';
 
-export function CharacterPackNode({ data, selected }: NodeProps) {
-  return <BaseWorkflowNode data={data as Record<string, unknown>} selected={!!selected} icon={Users} iconColor="text-blue-400" />;
+interface CharacterPackNodeProps extends NodeProps {
+  data: BaseWorkflowNodeData;
+}
+
+export function CharacterPackNode({ data, selected }: CharacterPackNodeProps) {
+  return <BaseWorkflowNode data={data} selected={!!selected} icon={Users} iconColor="text-blue-400" />;
 }

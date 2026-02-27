@@ -1,29 +1,50 @@
 'use client';
 
+import React, { useMemo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { cn } from '@/lib/utils';
 import { Check, Loader2, Lock, LucideIcon } from 'lucide-react';
+import { BaseWorkflowNodeData, NodeStatus } from '@/types/canvas';
 
 interface BaseWorkflowNodeProps {
-  data: Record<string, unknown>;
+  data: BaseWorkflowNodeData;
   selected: boolean;
   icon: LucideIcon;
   iconColor: string;
 }
 
-export function BaseWorkflowNode({ data, selected, icon: Icon, iconColor }: BaseWorkflowNodeProps) {
-  const status = data.status as string;
-  const locked = data.locked as boolean;
-  const label = data.label as string;
-  const description = data.description as string;
+const BaseWorkflowNodeComponent = function BaseWorkflowNode({ 
+  data, 
+  selected, 
+  icon: Icon, 
+  iconColor 
+}: BaseWorkflowNodeProps) {
+  const status = data.status;
+  const locked = data.locked ?? false;
+  const label = data.label;
+  const description = data.description;
 
-  const StatusIcon = status === 'completed' ? Check : status === 'active' ? Loader2 : Lock;
-  const statusColor = status === 'completed' ? 'text-green-500' : status === 'active' ? 'text-[#FF4D4D]' : 'text-white/30';
-  const statusBg = status === 'completed' ? 'bg-green-500/15' : status === 'active' ? 'bg-[rgba(255,77,77,0.15)]' : 'bg-white/5';
+  // 缓存 status 相关的计算结果
+  const statusConfig = useMemo(() => {
+    const config: Record<NodeStatus, { icon: LucideIcon; color: string; bg: string }> = {
+      completed: { icon: Check, color: 'text-green-500', bg: 'bg-green-500/15' },
+      active: { icon: Loader2, color: 'text-[var(--drama-red-active)]', bg: 'bg-[var(--drama-red-bg)]' },
+      pending: { icon: Lock, color: 'text-white/30', bg: 'bg-white/5' },
+    };
+    return config[status] || config.pending;
+  }, [status]);
+
+  const StatusIcon = statusConfig.icon;
+  const statusColor = statusConfig.color;
+  const statusBg = statusConfig.bg;
+
   const borderClass = selected 
-    ? 'border-[var(--brand-primary-rgba-60)] shadow-lg shadow-[rgba(192,3,28,0.25)]' 
-    : locked ? 'border-[var(--border-white-5)]' : 'border-[var(--border-white-10)]';
-  const bgClass = locked ? 'bg-white/[0.02]' : 'bg-[#0a0a0a]';
+    ? 'border-[var(--drama-red-border)] shadow-lg shadow-[rgba(192,3,28,0.25)]' 
+    : locked 
+      ? 'border-[var(--drama-border)]' 
+      : 'border-[var(--drama-border)]';
+  
+  const bgClass = locked ? 'bg-[var(--drama-bg-secondary)]' : 'bg-[var(--drama-bg-primary)]';
 
   return (
     <div className={cn(
@@ -32,7 +53,11 @@ export function BaseWorkflowNode({ data, selected, icon: Icon, iconColor }: Base
       bgClass,
       status === 'active' && 'animate-pulse-glow'
     )}>
-      <Handle type="target" position={Position.Top} className="!bg-[#C0031C] !w-2.5 !h-2.5 !border-2 !border-[#0a0a0a]" />
+      <Handle 
+        type="target" 
+        position={Position.Top} 
+        className="!bg-[var(--drama-red)] !w-2.5 !h-2.5 !border-2 !border-[var(--drama-bg-primary)]" 
+      />
       
       {/* Header */}
       <div className="flex items-center gap-2.5 mb-2">
@@ -59,7 +84,15 @@ export function BaseWorkflowNode({ data, selected, icon: Icon, iconColor }: Base
         </div>
       )}
       
-      <Handle type="source" position={Position.Bottom} className="!bg-[#C0031C] !w-2.5 !h-2.5 !border-2 !border-[#0a0a0a]" />
+      <Handle 
+        type="source" 
+        position={Position.Bottom} 
+        className="!bg-[var(--drama-red)] !w-2.5 !h-2.5 !border-2 !border-[var(--drama-bg-primary)]" 
+      />
     </div>
   );
-}
+};
+
+// 使用 React.memo 避免不必要的重渲染
+export const BaseWorkflowNode = React.memo(BaseWorkflowNodeComponent);
+BaseWorkflowNode.displayName = 'BaseWorkflowNode';

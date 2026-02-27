@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 :root {
+  /* Drama Brand Colors */
+  --drama-red: #C0031C;
+  --drama-red-active: #FF4D4D;
+  --drama-red-bg: rgba(192, 3, 28, 0.15);
+  --drama-red-border: rgba(192, 3, 28, 0.30);
+  --drama-bg-primary: #0a0a0f;
+  --drama-bg-secondary: #050505;
+  --drama-border: rgba(255, 255, 255, 0.10);
+  
   /* Brand Colors */
   --brand-primary: #C0031C;
   --brand-accent: #FF4D4D;

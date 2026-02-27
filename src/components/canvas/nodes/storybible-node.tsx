@@ -3,7 +3,12 @@
 import { NodeProps } from '@xyflow/react';
 import { BookOpen } from 'lucide-react';
 import { BaseWorkflowNode } from './base-workflow-node';
+import { BaseWorkflowNodeData } from '@/types/canvas';
 
-export function StoryBibleNode({ data, selected }: NodeProps) {
-  return <BaseWorkflowNode data={data as Record<string, unknown>} selected={!!selected} icon={BookOpen} iconColor="text-orange-400" />;
+interface StoryBibleNodeProps extends NodeProps {
+  data: BaseWorkflowNodeData;
+}
+
+export function StoryBibleNode({ data, selected }: StoryBibleNodeProps) {
+  return <BaseWorkflowNode data={data} selected={!!selected} icon={BookOpen} iconColor="text-orange-400" />;
 }

@@ -3,7 +3,12 @@
 import { NodeProps } from '@xyflow/react';
 import { FileText } from 'lucide-react';
 import { BaseWorkflowNode } from './base-workflow-node';
+import { BaseWorkflowNodeData } from '@/types/canvas';
 
-export function ScriptNode({ data, selected }: NodeProps) {
-  return <BaseWorkflowNode data={data as Record<string, unknown>} selected={!!selected} icon={FileText} iconColor="text-yellow-400" />;
+interface ScriptNodeProps extends NodeProps {
+  data: BaseWorkflowNodeData;
+}
+
+export function ScriptNode({ data, selected }: ScriptNodeProps) {
+  return <BaseWorkflowNode data={data} selected={!!selected} icon={FileText} iconColor="text-green-400" />;
 }

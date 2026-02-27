@@ -32,6 +32,7 @@ import { SegmentDesignNode } from '@/components/canvas/nodes/segmentdesign-node'
 import { ComposeNode } from '@/components/canvas/nodes/compose-node';
 import { EntryNode } from '@/components/canvas/nodes/entry-node';
 import { getCanvasLayout } from '@/lib/canvas-layout';
+import { WorkflowNodeData } from '@/types/canvas';
 
 const nodeTypes = {
   entry: EntryNode,
@@ -114,7 +115,7 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       initialLoadRef.current = false;
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // Intentionally empty: only run on mount, initialLoadRef controls execution
 
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {
@@ -131,7 +132,7 @@ const CanvasInner = React.memo(function CanvasInner() {
       );
       setEdges(initialEdges);
     }
-  }, [initialNodes, initialEdges]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialNodes, initialEdges]); // Intentionally omitting setNodes/setEdges: updating node data without resetting user progress
 
   // 保存节点位置到 localStorage
   useEffect(() => {
@@ -172,9 +173,13 @@ const CanvasInner = React.memo(function CanvasInner() {
   );
 
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
-    const data = node.data as Record<string, unknown>;
+    const data = node.data as WorkflowNodeData;
     // Don't open detail for locked nodes or entry
-    if (data.locked || node.type === 'entry') {
+    if ('locked' in data && data.locked) {
+      setSelectedNodeType(null);
+      return;
+    }
+    if (node.type === 'entry') {
       setSelectedNodeType(null);
       return;
     }

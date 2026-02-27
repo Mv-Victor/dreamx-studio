@@ -1,9 +1,14 @@
 'use client';
 
 import { NodeProps } from '@xyflow/react';
-import { Settings } from 'lucide-react';
+import { Flag } from 'lucide-react';
 import { BaseWorkflowNode } from './base-workflow-node';
+import { BaseWorkflowNodeData } from '@/types/canvas';
 
-export function CheckPointNode({ data, selected }: NodeProps) {
-  return <BaseWorkflowNode data={data as Record<string, unknown>} selected={!!selected} icon={Settings} iconColor="text-white/60" />;
+interface CheckPointNodeProps extends NodeProps {
+  data: BaseWorkflowNodeData;
+}
+
+export function CheckPointNode({ data, selected }: CheckPointNodeProps) {
+  return <BaseWorkflowNode data={data} selected={!!selected} icon={Flag} iconColor="text-red-400" />;
 }

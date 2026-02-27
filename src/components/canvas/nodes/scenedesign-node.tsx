@@ -1,9 +1,14 @@
 'use client';
 
 import { NodeProps } from '@xyflow/react';
-import { ImageIcon } from 'lucide-react';
+import { Image } from 'lucide-react';
 import { BaseWorkflowNode } from './base-workflow-node';
+import { BaseWorkflowNodeData } from '@/types/canvas';
 
-export function SceneDesignNode({ data, selected }: NodeProps) {
-  return <BaseWorkflowNode data={data as Record<string, unknown>} selected={!!selected} icon={ImageIcon} iconColor="text-emerald-400" />;
+interface SceneDesignNodeProps extends NodeProps {
+  data: BaseWorkflowNodeData;
+}
+
+export function SceneDesignNode({ data, selected }: SceneDesignNodeProps) {
+  return <BaseWorkflowNode data={data} selected={!!selected} icon={Image} iconColor="text-pink-400" />;
 }
