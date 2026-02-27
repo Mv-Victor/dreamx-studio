@@ -136,8 +136,8 @@ export default function HomePage() {
 
               <div className="h-4 w-px bg-white/10 mx-1" />
 
-              {/* Mode Tabs - Pill Style (nowrap) */}
-              <div className="flex-shrink-0 flex items-center gap-0.5 rounded-lg border border-white/10 bg-white/5 p-0.5 overflow-x-auto">
+              {/* Mode Tabs - Pill Style (hidden on mobile) */}
+              <div className="hidden md:flex flex-shrink-0 items-center gap-0.5 rounded-lg border border-white/10 bg-white/5 p-0.5 overflow-x-auto">
                 {modeTabs.map((tab) => (
                   <button
                     key={tab.id}
