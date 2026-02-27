@@ -7,10 +7,28 @@
   --drama-red: #C0031C;
   --drama-red-active: #FF4D4D;
   --drama-red-bg: rgba(192, 3, 28, 0.15);
+  --drama-red-bg-20: rgba(192, 3, 28, 0.20);
+  --drama-red-bg-25: rgba(192, 3, 28, 0.25);
+  --drama-red-bg-30: rgba(192, 3, 28, 0.30);
+  --drama-red-bg-40: rgba(192, 3, 28, 0.40);
+  --drama-red-bg-60: rgba(192, 3, 28, 0.60);
   --drama-red-border: rgba(192, 3, 28, 0.30);
+  --drama-red-border-active: rgba(192, 3, 28, 0.60);
+  --drama-accent-bg: rgba(255, 77, 77, 0.15);
   --drama-bg-primary: #0a0a0f;
   --drama-bg-secondary: #050505;
+  --drama-bg-dark: #000000;
+  --drama-bg-white-5: rgba(255, 255, 255, 0.05);
+  --drama-bg-white-10: rgba(255, 255, 255, 0.10);
   --drama-border: rgba(255, 255, 255, 0.10);
+  --drama-border-light: rgba(255, 255, 255, 0.05);
+  --drama-border-strong: rgba(255, 255, 255, 0.20);
+  --drama-text-primary: rgba(255, 255, 255, 0.90);
+  --drama-text-secondary: rgba(255, 255, 255, 0.80);
+  --drama-text-tertiary: rgba(255, 255, 255, 0.60);
+  --drama-text-disabled: rgba(255, 255, 255, 0.40);
+  --drama-text-muted: rgba(255, 255, 255, 0.30);
+  --drama-text-faint: rgba(255, 255, 255, 0.20);
   
   /* Brand Colors */
   --brand-primary: #C0031C;

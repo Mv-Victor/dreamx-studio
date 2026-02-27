@@ -1,62 +1,108 @@
-import { Node } from '@xyflow/react';
-
 /**
- * Workflow node status
+ * Canvas type definitions
  */
-export type NodeStatus = 'pending' | 'active' | 'completed';
+import type { Node, Edge } from '@xyflow/react';
 
-/**
- * Base workflow node data structure
- */
-export interface BaseWorkflowNodeData {
-  label: string;
-  description: string;
-  status: NodeStatus;
-  locked?: boolean;
-  [key: string]: unknown;
-}
-
-/**
- * Entry node data structure
- */
-export interface EntryNodeData {
-  label: string;
-  description: string;
-  isEntry?: true;
-  [key: string]: unknown;
-}
-
-/**
- * Union type for all workflow node data
- */
-export type WorkflowNodeData = BaseWorkflowNodeData | EntryNodeData;
-
-/**
- * Custom node types
- */
-export type WorkflowNodeType = 
+export type NodeType =
   | 'entry'
-  | 'storybible'
-  | 'characterpack'
-  | 'planningcenter'
+  | 'checkPoint'
+  | 'storyBible'
+  | 'characterPack'
+  | 'planningCenter'
   | 'script'
-  | 'scenedesign'
-  | 'segmentdesign'
-  | 'compose'
-  | 'checkpoint';
+  | 'sceneDesign'
+  | 'segmentDesign'
+  | 'compose';
 
-/**
- * Typed node for workflow
- */
-export interface WorkflowNode extends Node {
-  type: WorkflowNodeType;
-  data: WorkflowNodeData;
+export type NodeStatus = 'completed' | 'generating' | 'pending' | 'locked';
+
+export interface BaseNodeData {
+  label: string;
+  description?: string;
+  status: 'completed' | 'generating' | 'pending' | 'locked';
+  isEntry?: boolean;
+  progress?: number;
+  thumbnail?: string;
+  [key: string]: unknown;
 }
 
-/**
- * Edge data structure
- */
-export interface WorkflowEdgeData {
-  label?: string;
-  [key: string]: unknown;
+export interface CheckPointData extends BaseNodeData {
+  language?: string;
+  rating?: string;
+  camera_frame_ratio?: string;
+  episode_count?: number;
+  episode_duration?: number;
+  visual_style_id?: string;
+  idea_text?: string;
+}
+
+export interface StoryBibleData extends BaseNodeData {
+  world_building?: string;
+  tone?: string;
+  themes?: string[];
+}
+
+export interface CharacterPackData extends BaseNodeData {
+  character_count?: number;
+  characters?: Array<{
+    id: string;
+    name: string;
+    description: string;
+    image_url?: string;
+  }>;
+}
+
+export interface PlanningCenterData extends BaseNodeData {
+  series_logline?: string;
+  episode_outline?: string;
+}
+
+export interface ScriptData extends BaseNodeData {
+  script_text?: string;
+  scenes?: Array<{
+    scene_number: number;
+    location: string;
+    description: string;
+  }>;
+}
+
+export interface SceneDesignData extends BaseNodeData {
+  scene_prompts?: string[];
+  reference_images?: string[];
+}
+
+export interface SegmentDesignData extends BaseNodeData {
+  segment_prompts?: string[];
+  shot_list?: string[];
+}
+
+export interface ComposeData extends BaseNodeData {
+  video_url?: string;
+  thumbnail_url?: string;
+}
+
+export interface EntryNodeData extends BaseNodeData {
+  isEntry: true;
+}
+
+export type WorkflowNodeData =
+  | BaseNodeData
+  | CheckPointData
+  | StoryBibleData
+  | CharacterPackData
+  | PlanningCenterData
+  | ScriptData
+  | SceneDesignData
+  | SegmentDesignData
+  | ComposeData;
+
+// Alias for backward compatibility
+export type BaseWorkflowNodeData = BaseNodeData;
+
+export interface WorkflowNode extends Node<WorkflowNodeData> {
+  type: NodeType;
+}
+
+export interface WorkflowEdge extends Edge {
+  animated?: boolean;
 }

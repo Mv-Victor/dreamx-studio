@@ -116,6 +116,7 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       initialLoadRef.current = false;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Intentionally empty: only run on mount, initialLoadRef controls execution
 
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
@@ -133,6 +134,7 @@ const CanvasInner = React.memo(function CanvasInner() {
       );
       setEdges(initialEdges);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialNodes, initialEdges]); // Intentionally omitting setNodes/setEdges: updating node data without resetting user progress
 
   // 保存节点位置到 localStorage

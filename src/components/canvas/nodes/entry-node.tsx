@@ -3,7 +3,7 @@
 import { Handle, Position, NodeProps } from '@xyflow/react';
 import { cn } from '@/lib/utils';
 import { Play } from 'lucide-react';
-import { EntryNodeData } from '@/types/canvas';
+import type { EntryNodeData } from '@/types/canvas';
 
 interface EntryNodeProps extends NodeProps {
   data: EntryNodeData;

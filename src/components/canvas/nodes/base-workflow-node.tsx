@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { cn } from '@/lib/utils';
 import { Check, Loader2, Lock, LucideIcon } from 'lucide-react';
-import { BaseWorkflowNodeData, NodeStatus } from '@/types/canvas';
+import type { BaseWorkflowNodeData, NodeStatus } from '@/types/canvas';
 
 interface BaseWorkflowNodeProps {
   data: BaseWorkflowNodeData;
@@ -28,8 +28,9 @@ const BaseWorkflowNodeComponent = function BaseWorkflowNode({
   const statusConfig = useMemo(() => {
     const config: Record<NodeStatus, { icon: LucideIcon; color: string; bg: string }> = {
       completed: { icon: Check, color: 'text-green-500', bg: 'bg-green-500/15' },
-      active: { icon: Loader2, color: 'text-[var(--drama-red-active)]', bg: 'bg-[var(--drama-red-bg)]' },
+      generating: { icon: Loader2, color: 'text-[var(--drama-red-active)]', bg: 'bg-[var(--drama-red-bg)]' },
       pending: { icon: Lock, color: 'text-white/30', bg: 'bg-white/5' },
+      locked: { icon: Lock, color: 'text-white/30', bg: 'bg-white/5' },
     };
     return config[status] || config.pending;
   }, [status]);
@@ -51,7 +52,7 @@ const BaseWorkflowNodeComponent = function BaseWorkflowNode({
       'w-[240px] rounded-xl border-[1.5px] px-4 py-3.5 transition-all duration-200',
       borderClass,
       bgClass,
-      status === 'active' && 'animate-pulse-glow'
+      status === 'generating' && 'animate-pulse-glow'
     )}>
       <Handle 
         type="target" 
