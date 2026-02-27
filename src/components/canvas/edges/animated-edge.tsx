@@ -26,8 +26,8 @@ export function AnimatedEdge({
     <>
       <defs>
         <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#C0031C" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#FF4D4D" stopOpacity="0.8" />
+          <stop offset="0%" stopColor="var(--drama-red)" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="var(--drama-red-active)" stopOpacity="0.8" />
         </linearGradient>
       </defs>
       

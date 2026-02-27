@@ -13,13 +13,13 @@ export function GenerationTaskList() {
       {generationTasks.map((task) => (
         <div
           key={task.task_id}
-          className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 shadow-lg"
+          className="rounded-xl border border-[var(--drama-border)] bg-[var(--drama-bg-primary)] p-3 shadow-lg"
         >
           <div className="flex items-start gap-3">
             {/* Icon */}
             <div className="flex-shrink-0">
               {task.status === 'processing' && (
-                <Loader2 className="h-5 w-5 text-[#FF4D4D] animate-spin" />
+                <Loader2 className="h-5 w-5 text-[var(--drama-red-active)] animate-spin" />
               )}
               {task.status === 'completed' && (
                 <CheckCircle className="h-5 w-5 text-green-500" />
@@ -44,9 +44,9 @@ export function GenerationTaskList() {
                     <span>进度</span>
                     <span>{task.progress}%</span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-1.5 rounded-full bg-[var(--bg-white-10)] overflow-hidden">
                     <div
-                      className="h-full bg-[#C0031C] transition-all duration-300"
+                      className="h-full bg-[var(--drama-red)] transition-all duration-300"
                       style={{ width: `${task.progress}%` }}
                     />
                   </div>

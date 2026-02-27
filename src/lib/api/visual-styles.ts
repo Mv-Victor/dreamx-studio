@@ -3,8 +3,8 @@
  * 视觉风格相关接口
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { api } from './client';
+// API client available for future use
+// import { api } from './client';
 import type { ApiResponse, VisualStyle } from '@/types/api';
 import { visualStyles as allStyles } from '@/mock/visual-styles';
 

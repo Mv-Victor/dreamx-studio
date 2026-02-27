@@ -3,8 +3,8 @@
  * 项目相关接口
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { api } from './client';
+// API client available for future use
+// import { api } from './client';
 import type {
   ApiResponse,
   Project,

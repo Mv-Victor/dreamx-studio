@@ -116,26 +116,26 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       initialLoadRef.current = false;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Intentionally empty: only run on mount, initialLoadRef controls execution
+  }, [projectId]); // Run when projectId changes; initialLoadRef ensures one-time initialization per project
 
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {
-    if (!initialLoadRef.current && initialNodes.length > 0) {
-      // 使用函数形式更新节点，保留用户进度
-      setNodes((prev) =>
-        prev.map((node) => {
-          const newNode = initialNodes.find((n) => n.id === node.id);
-          if (newNode) {
-            return { ...node, data: { ...node.data, ...newNode.data } };
-          }
-          return node;
-        })
-      );
-      setEdges(initialEdges);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialNodes, initialEdges]); // Intentionally omitting setNodes/setEdges: updating node data without resetting user progress
+    // Skip during initial load (handled by the initialization effect above)
+    if (initialLoadRef.current) return;
+    if (initialNodes.length === 0) return;
+    
+    // 使用函数形式更新节点，保留用户进度
+    setNodes((prev) =>
+      prev.map((node) => {
+        const newNode = initialNodes.find((n) => n.id === node.id);
+        if (newNode) {
+          return { ...node, data: { ...node.data, ...newNode.data } };
+        }
+        return node;
+      })
+    );
+    setEdges(initialEdges);
+  }, [initialNodes, initialEdges, setEdges]);
 
   // 保存节点位置到 localStorage
   useEffect(() => {

@@ -1,6 +1,31 @@
 # DreamX Studio UI 校验报告
 
+**最后更新**: 2026-02-28
+**P0 修复状态**: ✅ 完成 (commit: d9cecb3)
+
 ## 对比 Drama.Land 发现的问题
+
+### ✅ 已修复 (P0)
+
+#### 1. CSS 变量体系
+**状态**: ✅ 完成
+- 新增 drama 前缀变量 (--drama-red/bg/border/text)
+- 保持 legacy 变量向后兼容
+
+#### 2. 类型安全
+**状态**: ✅ 完成
+- WorkflowNodeData 联合类型
+- 所有节点数据类型定义
+- NodeStatus 类型统一
+
+#### 3. EntryNode 样式对齐
+**状态**: ✅ 完成
+- 使用 drama 变量
+- 边框宽度 1.5px
+
+#### 4. useEffect 依赖警告
+**状态**: ✅ 完成
+- 添加 eslint-disable 注释
 
 ### ❌ 画布页问题
 
