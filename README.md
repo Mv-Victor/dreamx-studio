@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DreamX Studio
 
-## Getting Started
+AI 驱动的全链路短剧/短视频创作平台 — 参考 Drama.Land 设计实现
 
-First, run the development server:
+## 🎯 项目定位
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+融合 Drama.Land + Huobao + Moyin 三家优势，打造：
+- **五模式全覆盖**：单集视频/连续剧集/剧本模式/音乐 MV/小红书图文转视频
+- **画布式创作**：React Flow 节点流程图，可视化创作进度
+- **AI 协作聊天**：每个项目有独立 AI 对话上下文，引导式创作
+- **完整商业化**：积分 + 订阅 + 任务系统
+
+## 🛠 技术栈
+
+### 前端
+- **框架**: Next.js 14 App Router
+- **UI**: React 18+ Tailwind CSS Radix UI
+- **画布**: React Flow (@xyflow/react)
+- **状态**: Zustand + Immer
+- **图标**: Lucide Icons
+
+### 后端（规划）
+- **框架**: FastAPI (Python)
+- **数据库**: PostgreSQL
+- **任务队列**: Celery + Redis
+- **部署**: FaaS / Serverless
+
+## 📁 项目结构
+
+```
+dreamx-studio/
+├── src/
+│   ├── app/                    # Next.js App Router 页面
+│   │   ├── page.tsx           # 首页
+│   │   ├── login/page.tsx     # 登录页
+│   │   ├── register/page.tsx  # 注册页
+│   │   ├── projects/page.tsx  # 项目列表
+│   │   ├── projects/[projectId]/canvas/page.tsx  # 画布页
+│   │   ├── showcases/page.tsx # 档案馆
+│   │   ├── subscription/page.tsx  # 订阅/积分
+│   │   └── assets/page.tsx    # 资产库
+│   ├── components/
+│   │   ├── canvas/            # 画布相关组件
+│   │   │   ├── nodes/         # 节点组件（8 种）
+│   │   │   ├── details/       # 详情面板（8 个）
+│   │   │   ├── chat-panel.tsx # 聊天面板
+│   │   │   ├── detail-panel.tsx
+│   │   │   └── canvas-toolbar.tsx
+│   │   └── ui/                # 通用 UI 组件
+│   │       ├── button.tsx
+│   │       ├── badge.tsx
+│   │       ├── detail-section.tsx
+│   │       └── status-badge.tsx
+│   ├── lib/
+│   │   ├── api/               # API 客户端
+│   │   ├── canvas-layout.ts   # 画布布局配置
+│   │   └── utils.ts
+│   ├── mock/                  # Mock 数据
+│   │   ├── visual-styles.ts   # 107 种视觉风格
+│   │   └── voices.ts          # 151 个配音音色
+│   ├── stores/                # Zustand Store
+│   │   └── project-store.ts
+│   └── types/                 # TypeScript 类型
+│       ├── api.ts
+│       └── project.ts
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 创作模式
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| 模式 | 说明 | 对标 |
+|------|------|------|
+| 单集视频 | 单集短视频创作 | Drama.Land |
+| 连续剧集 | 多集连续剧，DAG 工作流 | Drama.Land |
+| 剧本模式 | 导入已有剧本，跳过 AI 编剧 | Drama.Land |
+| 音乐 MV | 音乐驱动的视觉创作 | Drama.Land |
+| 小红书图文转视频 | 图文笔记→爆款文案→营销视频 | DreamX 独有 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📊 数据资产
 
-## Learn More
+### 视觉风格库（107 种）
+- Realistic/Live: 52 种
+- 2D Animation: 24 种
+- Illustration: 18 种
+- 3D Render: 7 种
+- Experimental: 6 种
 
-To learn more about Next.js, take a look at the following resources:
+### 配音库（151 个）
+- English Male: 55
+- English Female: 41
+- Chinese Male: 30
+- Chinese Female: 25
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 订阅体系
+| 档位 | 月价 | 月积分 | 最大分辨率 | 商用授权 |
+|------|------|--------|-----------|---------|
+| Starter | $0 | 0 | 720p | ❌ |
+| Basic | $19.9 | 10,000 | 1080p | ❌ |
+| Plus | $29.9 | 20,000 | 1080p | ✅ |
+| Pro | $59.9 | 40,000 | 1080p | ✅ |
+| Ultra | $129.9 | 100,000 | 2K | ✅ |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 开发
 
-## Deploy on Vercel
+```bash
+# 安装依赖
+npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 开发模式
+npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 构建
+npm run build
+
+# 启动生产服务
+npm start
+```
+
+## 📝 进度
+
+### 已完成 (P0/P1)
+- [x] 前端基础架构（Next.js 14 + React Flow + Tailwind）
+- [x] 9 个完整页面（首页/登录/注册/项目/画布/Showcases/订阅/资产）
+- [x] 8 种画布节点 + 8 个详情面板
+- [x] 组件库（DetailSection / StatusBadge / Button / Badge）
+- [x] 画布优化（自定义 Edge / 视口持久化 / 节点位置保存）
+- [x] UI 对齐 drama-land 设计
+- [x] 107 种视觉风格 + 151 个配音音色数据
+- [x] API 层封装（mock 模式）
+
+### 待完成 (P2/P3)
+- [ ] PoloAI 文生图/文生视频 API 对接
+- [ ] SSE 实时进度推送
+- [ ] FastAPI 后端框架
+- [ ] PostgreSQL 数据模型
+- [ ] Celery 任务队列
+- [ ] 角色一致性系统
+
+## 📄 许可证
+
+AGPL-3.0
+
+---
+
+**DreamX Studio** — 把你的想法"玩"成一支视频
