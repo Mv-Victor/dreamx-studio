@@ -18,8 +18,8 @@ interface CheckPointDetailProps {
 }
 
 export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: CheckPointDetailProps) => {
-  const data = { ...DEFAULT_CHECKPOINT_DATA, ..._nodeData };
-  const updateNode = _updateNode || ((patch) => {
+  const _data = { ...DEFAULT_CHECKPOINT_DATA, ..._nodeData };
+  const _updateNodeFn = _updateNode || ((patch) => {
     console.warn('[CheckPointDetail] updateNode not provided:', patch);
   });
 
@@ -32,8 +32,8 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
             { value: 'zh-CN', label: '中文' },
             { value: 'en-US', label: 'English' },
           ]}
-          value={data.language}
-          onChange={(val) => updateNode({ language: val as 'zh-CN' | 'en-US' })}
+          value={_data.language}
+          onChange={(val) => _updateNodeFn({ language: val as 'zh-CN' | 'en-US' })}
         />
       </DetailSection>
 
@@ -45,8 +45,8 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
             { value: 'PG-13', label: 'PG-13' },
             { value: 'R', label: 'R' },
           ]}
-          value={data.rating}
-          onChange={(val) => updateNode({ rating: val as 'PG' | 'PG-13' | 'R' })}
+          value={_data.rating}
+          onChange={(val) => _updateNodeFn({ rating: val as 'PG' | 'PG-13' | 'R' })}
         />
       </DetailSection>
 
@@ -58,19 +58,19 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
             { value: '16:9', label: '16:9' },
             { value: '1:1', label: '1:1' },
           ]}
-          value={data.camera_frame_ratio}
-          onChange={(val) => updateNode({ camera_frame_ratio: val as '9:16' | '16:9' | '1:1' })}
+          value={_data.camera_frame_ratio}
+          onChange={(val) => _updateNodeFn({ camera_frame_ratio: val as '9:16' | '16:9' | '1:1' })}
         />
       </DetailSection>
 
       {/* Episode Count */}
-      <DetailSection icon={Film} label={`Episodes: ${data.episode_count || 1}`}>
+      <DetailSection icon={Film} label={`Episodes: ${_data.episode_count || 1}`}>
         <input
           type="range"
           min={1}
           max={12}
-          value={data.episode_count || 1}
-          onChange={(e) => updateNode({ episode_count: parseInt(e.target.value) })}
+          value={_data.episode_count || 1}
+          onChange={(e) => _updateNodeFn({ episode_count: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-[var(--bg-white-10)]"
         />
         <div className="flex justify-between mt-1.5 text-[10px] text-white/30">
@@ -80,14 +80,14 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
       </DetailSection>
 
       {/* Episode Duration */}
-      <DetailSection icon={Clock} label={`Duration: ${data.episode_duration || 60}s`}>
+      <DetailSection icon={Clock} label={`Duration: ${_data.episode_duration || 60}s`}>
         <input
           type="range"
           min={15}
           max={300}
           step={15}
-          value={data.episode_duration || 60}
-          onChange={(e) => updateNode({ episode_duration: parseInt(e.target.value) })}
+          value={_data.episode_duration || 60}
+          onChange={(e) => _updateNodeFn({ episode_duration: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer bg-[var(--bg-white-10)]"
         />
         <div className="flex justify-between mt-1.5 text-[10px] text-white/30">
@@ -100,11 +100,11 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
       <DetailSection icon={ImageIcon} label="Visual Style">
         <div className="grid grid-cols-2 gap-2">
           {visualStyles.slice(0, 4).map((style) => {
-            const isSelected = data.visual_style_id === style.id;
+            const isSelected = _data.visual_style_id === style.id;
             return (
               <button
                 key={style.id}
-                onClick={() => updateNode({ visual_style_id: style.id })}
+                onClick={() => _updateNodeFn({ visual_style_id: style.id })}
                 className={cn(
                   'group rounded-lg overflow-hidden border transition-all cursor-pointer',
                   isSelected
@@ -114,7 +114,7 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
               >
               <div className="aspect-video bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center relative overflow-hidden">
                 <div className="text-2xl opacity-30">🎨</div>
-                {data.visual_style_id === style.id && (
+                {_data.visual_style_id === style.id && (
                   <div className="absolute inset-0 bg-[rgba(192,3,28,0.20)] flex items-center justify-center">
                     <span className="text-white text-xs font-medium">✓</span>
                   </div>
@@ -138,8 +138,8 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
       {/* Idea Text */}
       <DetailSection icon={FileText} label="Story Idea">
         <textarea
-          value={data.idea_text || ''}
-          onChange={(e) => updateNode({ idea_text: e.target.value })}
+          value={_data.idea_text || ''}
+          onChange={(e) => _updateNodeFn({ idea_text: e.target.value })}
           placeholder="描述你的创意故事..."
           className="w-full min-h-[100px] rounded-lg border-[var(--border-white-10)] bg-white/5 px-3 py-2.5 text-xs text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 resize-none transition-colors"
         />
