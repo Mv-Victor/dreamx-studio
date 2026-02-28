@@ -129,14 +129,23 @@ const CanvasInner = React.memo(function CanvasInner() {
       }
 
       initialLoadRef.current = false;
+      setIsInitialLoadComplete(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]); // initialLoadRef is a ref, changes don't trigger re-render
 
+  // Track if initial load is complete (separate from initialLoadRef to avoid coupling)
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+
+  // Mark initial load as complete after first render
+  useEffect(() => {
+    setIsInitialLoadComplete(true);
+  }, []);
+
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {
     // Skip during initial load (handled by the initialization effect above)
-    if (initialLoadRef.current) return;
+    if (!isInitialLoadComplete) return;
     if (initialNodes.length === 0) return;
     
     // 使用函数形式更新节点，保留用户进度
@@ -151,7 +160,7 @@ const CanvasInner = React.memo(function CanvasInner() {
     );
     setEdges(initialEdges);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialNodes, initialEdges]); // setNodes uses functional update, no need to include
+  }, [isInitialLoadComplete, initialNodes, initialEdges]); // setNodes uses functional update, no need to include
 
   // 保存节点位置到 localStorage
   useEffect(() => {
@@ -204,22 +213,28 @@ const CanvasInner = React.memo(function CanvasInner() {
     []
   );
 
+  const connectionStatusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const onConnectStart = useCallback(() => {
     setConnectionStatus(null);
   }, []);
 
   const onConnectEnd = useCallback(() => {
     // Connection end handled by isValidConnection + onConnect
-    setConnectionStatus(null);
+    // Clear status with debounce to avoid flicker
+    if (connectionStatusTimeoutRef.current) clearTimeout(connectionStatusTimeoutRef.current);
+    connectionStatusTimeoutRef.current = setTimeout(() => {
+      setConnectionStatus(null);
+    }, 150);
   }, []);
 
   const connectionLineStyle = useMemo(
     () => ({
       stroke: connectionStatus === 'valid' 
-        ? 'var(--drama-edge-valid, #22c55e)' 
+        ? 'var(--drama-edge-valid)' 
         : connectionStatus === 'invalid' 
-          ? 'var(--drama-edge-invalid, #ef4444)' 
-          : 'var(--drama-edge-color, rgba(255,255,255,0.20))',
+          ? 'var(--drama-edge-invalid)' 
+          : 'var(--drama-edge-color)',
       strokeWidth: 2,
     }),
     [connectionStatus]
