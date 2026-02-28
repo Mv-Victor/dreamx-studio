@@ -1,22 +1,18 @@
 'use client';
 
+import React from 'react';
 import { Sparkles, RefreshCw, Image as ImageIcon, Lock } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/ui/status-badge';
 import type { SceneDesignData } from '@/types/canvas';
+import { DEFAULT_SCENE_DESIGN_DATA } from '@/lib/defaults';
 
 interface SceneDesignDetailProps {
   _nodeData?: SceneDesignData;
   _updateNode?: (patch: Partial<SceneDesignData>) => void;
   onNodeComplete?: () => void;
 }
-
-const DEFAULT_SCENE_DESIGN_DATA: SceneDesignData = {
-  label: '场景设计',
-  status: 'generating',
-  scenes: [],
-};
 
 const SCENE_DESIGN_MOCK_DATA = [
   { id: 1, header: '外景 - 荒山古道 - 黄昏', status: 'completed' as const },
@@ -25,8 +21,7 @@ const SCENE_DESIGN_MOCK_DATA = [
   { id: 4, header: '内景 - 客栈 - 午后', status: 'pending' as const },
 ];
 
-export function SceneDesignDetail({ _nodeData, _updateNode, onNodeComplete }: SceneDesignDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const SceneDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: SceneDesignDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_SCENE_DESIGN_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,4 +83,6 @@ export function SceneDesignDetail({ _nodeData, _updateNode, onNodeComplete }: Sc
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(SceneDesignDetail);

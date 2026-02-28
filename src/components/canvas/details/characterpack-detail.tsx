@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useProjectStore } from '@/stores/project-store';
 import { useEffect } from 'react';
 import { Sparkles, Volume2, Plus, User } from 'lucide-react';
@@ -7,6 +8,7 @@ import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { CharacterPackData } from '@/types/canvas';
+import { DEFAULT_CHARACTER_PACK_DATA } from '@/lib/defaults';
 
 interface CharacterPackDetailProps {
   _nodeData?: CharacterPackData;
@@ -14,14 +16,7 @@ interface CharacterPackDetailProps {
   onNodeComplete?: () => void;
 }
 
-const DEFAULT_CHARACTER_PACK_DATA: CharacterPackData = {
-  label: '角色集',
-  status: 'generating',
-  characters: [],
-};
-
-export function CharacterPackDetail({ _nodeData, _updateNode, onNodeComplete }: CharacterPackDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const CharacterPackDetail = ({ _nodeData, _updateNode, onNodeComplete }: CharacterPackDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_CHARACTER_PACK_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -119,4 +114,6 @@ export function CharacterPackDetail({ _nodeData, _updateNode, onNodeComplete }: 
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(CharacterPackDetail);

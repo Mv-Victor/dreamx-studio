@@ -1,23 +1,19 @@
 'use client';
 
+import React from 'react';
 import { Sparkles, RefreshCw, Clapperboard, Lock, Play } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Badge } from '@/components/ui/badge';
 import type { SegmentDesignData } from '@/types/canvas';
+import { DEFAULT_SEGMENT_DESIGN_DATA } from '@/lib/defaults';
 
 interface SegmentDesignDetailProps {
   _nodeData?: SegmentDesignData;
   _updateNode?: (patch: Partial<SegmentDesignData>) => void;
   onNodeComplete?: () => void;
 }
-
-const DEFAULT_SEGMENT_DESIGN_DATA: SegmentDesignData = {
-  label: '分镜设计',
-  status: 'generating',
-  segments: [],
-};
 
 const SEGMENT_DESIGN_MOCK_DATA = [
   { id: 1, description: '夕阳下的荒山古道，镜头缓缓推进', shotType: '远景', camera: '推镜头', duration: '4s', status: 'completed' as const },
@@ -27,8 +23,7 @@ const SEGMENT_DESIGN_MOCK_DATA = [
   { id: 5, description: '白骨夫人缓缓睁开冰蓝色的眼睛', shotType: '大特写', camera: '固定', duration: '3s', status: 'pending' as const },
 ];
 
-export function SegmentDesignDetail({ _nodeData, _updateNode, onNodeComplete }: SegmentDesignDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const SegmentDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: SegmentDesignDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_SEGMENT_DESIGN_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -95,4 +90,6 @@ export function SegmentDesignDetail({ _nodeData, _updateNode, onNodeComplete }: 
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(SegmentDesignDetail);

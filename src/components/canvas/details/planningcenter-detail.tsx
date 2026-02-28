@@ -1,11 +1,13 @@
 'use client';
 
+import React from 'react';
 import { Sparkles, LayoutGrid, Image as ImageIcon, Film, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { PlanningCenterData } from '@/types/canvas';
+import { DEFAULT_PLANNING_CENTER_DATA } from '@/lib/defaults';
 
 interface PlanningCenterDetailProps {
   _nodeData?: PlanningCenterData;
@@ -13,14 +15,7 @@ interface PlanningCenterDetailProps {
   onNodeComplete?: () => void;
 }
 
-const DEFAULT_PLANNING_CENTER_DATA: PlanningCenterData = {
-  label: '规划中心',
-  status: 'generating',
-  episodes: [],
-};
-
-export function PlanningCenterDetail({ _nodeData, _updateNode, onNodeComplete }: PlanningCenterDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const PlanningCenterDetail = ({ _nodeData, _updateNode, onNodeComplete }: PlanningCenterDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_PLANNING_CENTER_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -132,4 +127,6 @@ export function PlanningCenterDetail({ _nodeData, _updateNode, onNodeComplete }:
       </Button>
     </div>
   );
-}
+};
+
+export default React.memo(PlanningCenterDetail);

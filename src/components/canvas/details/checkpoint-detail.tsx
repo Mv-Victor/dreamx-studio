@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Sparkles, ChevronRight, Monitor, Shield, Film, Clock, Type, Image as ImageIcon, FileText } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,7 @@ interface CheckPointDetailProps {
   onNodeComplete?: () => void;
 }
 
-export function CheckPointDetail({ _nodeData, _updateNode, onNodeComplete }: CheckPointDetailProps) {
+export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: CheckPointDetailProps) => {
   const data = { ...DEFAULT_CHECKPOINT_DATA, ..._nodeData };
   const updateNode = _updateNode || ((patch) => {
     console.warn('[CheckPointDetail] updateNode not provided:', patch);
@@ -154,4 +155,6 @@ export function CheckPointDetail({ _nodeData, _updateNode, onNodeComplete }: Che
       </Button>
     </div>
   );
-}
+};
+
+export default React.memo(CheckPointDetail);

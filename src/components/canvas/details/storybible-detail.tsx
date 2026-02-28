@@ -1,22 +1,18 @@
 'use client';
 
+import React from 'react';
 import { Sparkles, RefreshCw, BookOpen } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { StoryBibleData } from '@/types/canvas';
+import { DEFAULT_STORY_BIBLE_DATA } from '@/lib/defaults';
 
 interface StoryBibleDetailProps {
   _nodeData?: StoryBibleData;
   _updateNode?: (patch: Partial<StoryBibleData>) => void;
   onNodeComplete?: () => void;
 }
-
-const DEFAULT_STORY_BIBLE_DATA: StoryBibleData = {
-  label: '故事圣经',
-  status: 'generating',
-  story_options: [],
-};
 
 const STORY_BIBLE_MOCK_DATA = [
   {
@@ -45,8 +41,7 @@ const STORY_BIBLE_MOCK_DATA = [
   },
 ];
 
-export function StoryBibleDetail({ _nodeData, _updateNode, onNodeComplete }: StoryBibleDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const StoryBibleDetail = ({ _nodeData, _updateNode, onNodeComplete }: StoryBibleDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_STORY_BIBLE_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -94,4 +89,6 @@ export function StoryBibleDetail({ _nodeData, _updateNode, onNodeComplete }: Sto
       </DetailSection>
     </div>
   );
-}
+};
+
+export default React.memo(StoryBibleDetail);

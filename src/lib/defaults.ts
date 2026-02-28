@@ -3,7 +3,16 @@
  * 用于各组件的默认数据初始化
  */
 
-import type { CheckPointData } from '@/types/canvas';
+import type {
+  CheckPointData,
+  StoryBibleData,
+  CharacterPackData,
+  PlanningCenterData,
+  ScriptData,
+  SceneDesignData,
+  SegmentDesignData,
+  ComposeData,
+} from '@/types/canvas';
 
 /**
  * CheckPoint 节点默认数据
@@ -18,6 +27,62 @@ export const DEFAULT_CHECKPOINT_DATA: CheckPointData = {
   episode_duration: 60,
   visual_style_id: 1,
   idea_text: '',
+};
+
+/**
+ * StoryBible 节点默认数据
+ */
+export const DEFAULT_STORY_BIBLE_DATA: StoryBibleData = {
+  label: '故事圣经',
+  status: 'generating',
+};
+
+/**
+ * CharacterPack 节点默认数据
+ */
+export const DEFAULT_CHARACTER_PACK_DATA: CharacterPackData = {
+  label: '角色集',
+  status: 'generating',
+};
+
+/**
+ * PlanningCenter 节点默认数据
+ */
+export const DEFAULT_PLANNING_CENTER_DATA: PlanningCenterData = {
+  label: '规划中心',
+  status: 'generating',
+};
+
+/**
+ * Script 节点默认数据
+ */
+export const DEFAULT_SCRIPT_DATA: ScriptData = {
+  label: '剧本',
+  status: 'generating',
+};
+
+/**
+ * SceneDesign 节点默认数据
+ */
+export const DEFAULT_SCENE_DESIGN_DATA: SceneDesignData = {
+  label: '场景设计',
+  status: 'generating',
+};
+
+/**
+ * SegmentDesign 节点默认数据
+ */
+export const DEFAULT_SEGMENT_DESIGN_DATA: SegmentDesignData = {
+  label: '分镜设计',
+  status: 'generating',
+};
+
+/**
+ * Compose 节点默认数据
+ */
+export const DEFAULT_COMPOSE_DATA: ComposeData = {
+  label: '合成',
+  status: 'pending',
 };
 
 /**

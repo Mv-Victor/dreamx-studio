@@ -1,11 +1,13 @@
 'use client';
 
+import React from 'react';
 import { useProjectStore } from '@/stores/project-store';
 import { Sparkles, Edit3, FileText } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { ScriptData } from '@/types/canvas';
+import { DEFAULT_SCRIPT_DATA } from '@/lib/defaults';
 
 interface ScriptDetailProps {
   _nodeData?: ScriptData;
@@ -13,14 +15,7 @@ interface ScriptDetailProps {
   onNodeComplete?: () => void;
 }
 
-const DEFAULT_SCRIPT_DATA: ScriptData = {
-  label: '剧本',
-  status: 'generating',
-  episodes: [],
-};
-
-export function ScriptDetail({ _nodeData, _updateNode, onNodeComplete }: ScriptDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const ScriptDetail = ({ _nodeData, _updateNode, onNodeComplete }: ScriptDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_SCRIPT_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -99,4 +94,6 @@ export function ScriptDetail({ _nodeData, _updateNode, onNodeComplete }: ScriptD
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(ScriptDetail);

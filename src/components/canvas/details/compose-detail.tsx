@@ -1,10 +1,12 @@
 'use client';
 
+import React from 'react';
 import { Download, Play, Settings2, Film } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { ComposeData } from '@/types/canvas';
+import { DEFAULT_COMPOSE_DATA } from '@/lib/defaults';
 
 interface ComposeDetailProps {
   _nodeData?: ComposeData;
@@ -12,14 +14,7 @@ interface ComposeDetailProps {
   onNodeComplete?: () => void;
 }
 
-const DEFAULT_COMPOSE_DATA: ComposeData = {
-  label: '合成',
-  status: 'pending',
-  video_url: '',
-};
-
-export function ComposeDetail({ _nodeData, _updateNode, onNodeComplete }: ComposeDetailProps) {
-  // TODO: Implement data binding when backend integration is ready
+export const ComposeDetail = ({ _nodeData, _updateNode, onNodeComplete }: ComposeDetailProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = { ...DEFAULT_COMPOSE_DATA, ..._nodeData };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,4 +69,6 @@ export function ComposeDetail({ _nodeData, _updateNode, onNodeComplete }: Compos
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(ComposeDetail);
