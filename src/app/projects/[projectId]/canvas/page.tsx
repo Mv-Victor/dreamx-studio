@@ -24,6 +24,7 @@ import { ChatPanel } from '@/components/canvas/chat-panel';
 import { DetailPanel } from '@/components/canvas/detail-panel';
 import { CanvasToolbar } from '@/components/canvas/canvas-toolbar';
 import { ContextMenu } from '@/components/canvas/context-menu';
+import { FloatingNav } from '@/components/canvas/floating-nav';
 import { CheckPointNode } from '@/components/canvas/nodes/checkpoint-node';
 import { StoryBibleNode } from '@/components/canvas/nodes/storybible-node';
 import { CharacterPackNode } from '@/components/canvas/nodes/characterpack-node';
@@ -306,6 +307,9 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       <div className="flex-1 flex overflow-hidden">
         {chatOpen && <ChatPanel />}
+
+        {/* Floating Navigation */}
+        <FloatingNav onAddNode={() => setContextMenu({ x: window.innerWidth / 2, y: window.innerHeight / 2 })} />
 
         <div className="flex-1 relative">
           <ReactFlow
