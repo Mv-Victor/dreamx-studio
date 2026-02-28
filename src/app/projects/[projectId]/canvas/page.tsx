@@ -16,7 +16,6 @@ import {
   Connection,
   Edge,
   Viewport,
-  type PaneMouseEvent,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useProjectStore } from '@/stores/project-store';
@@ -243,7 +242,8 @@ const CanvasInner = React.memo(function CanvasInner() {
 
   const { screenToFlowPosition } = useReactFlow();
 
-  const onPaneContextMenu = useCallback((event: PaneMouseEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaneContextMenu = useCallback((event: any) => {
     event.preventDefault();
     setContextMenu({ x: event.clientX, y: event.clientY });
   }, []);
