@@ -8,8 +8,16 @@ import { Badge } from '@/components/ui/badge';
 import type { SegmentDesignData } from '@/types/canvas';
 
 interface SegmentDesignDetailProps {
+  _nodeData?: SegmentDesignData;
+  _updateNode?: (patch: Partial<SegmentDesignData>) => void;
   onNodeComplete?: () => void;
 }
+
+const DEFAULT_SEGMENT_DESIGN_DATA: SegmentDesignData = {
+  label: '分镜设计',
+  status: 'generating',
+  segments: [],
+};
 
 const SEGMENT_DESIGN_MOCK_DATA = [
   { id: 1, description: '夕阳下的荒山古道，镜头缓缓推进', shotType: '远景', camera: '推镜头', duration: '4s', status: 'completed' as const },
@@ -19,7 +27,15 @@ const SEGMENT_DESIGN_MOCK_DATA = [
   { id: 5, description: '白骨夫人缓缓睁开冰蓝色的眼睛', shotType: '大特写', camera: '固定', duration: '3s', status: 'pending' as const },
 ];
 
-export function SegmentDesignDetail({ onNodeComplete }: SegmentDesignDetailProps) {
+export function SegmentDesignDetail({ _nodeData, _updateNode, onNodeComplete }: SegmentDesignDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_SEGMENT_DESIGN_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[SegmentDesignDetail] updateNode not provided:', patch);
+  });
+
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Clapperboard} label="Segments">

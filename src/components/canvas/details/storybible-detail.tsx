@@ -7,8 +7,16 @@ import { Badge } from '@/components/ui/badge';
 import type { StoryBibleData } from '@/types/canvas';
 
 interface StoryBibleDetailProps {
+  _nodeData?: StoryBibleData;
+  _updateNode?: (patch: Partial<StoryBibleData>) => void;
   onNodeComplete?: () => void;
 }
+
+const DEFAULT_STORY_BIBLE_DATA: StoryBibleData = {
+  label: '故事圣经',
+  status: 'generating',
+  story_options: [],
+};
 
 const STORY_BIBLE_MOCK_DATA = [
   {
@@ -37,7 +45,15 @@ const STORY_BIBLE_MOCK_DATA = [
   },
 ];
 
-export function StoryBibleDetail({ onNodeComplete }: StoryBibleDetailProps) {
+export function StoryBibleDetail({ _nodeData, _updateNode, onNodeComplete }: StoryBibleDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_STORY_BIBLE_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[StoryBibleDetail] updateNode not provided:', patch);
+  });
+
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={BookOpen} label="Story Options">

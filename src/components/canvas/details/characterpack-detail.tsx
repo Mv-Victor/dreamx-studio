@@ -9,10 +9,25 @@ import { Badge } from '@/components/ui/badge';
 import type { CharacterPackData } from '@/types/canvas';
 
 interface CharacterPackDetailProps {
+  _nodeData?: CharacterPackData;
+  _updateNode?: (patch: Partial<CharacterPackData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function CharacterPackDetail({ onNodeComplete }: CharacterPackDetailProps) {
+const DEFAULT_CHARACTER_PACK_DATA: CharacterPackData = {
+  label: '角色集',
+  status: 'generating',
+  characters: [],
+};
+
+export function CharacterPackDetail({ _nodeData, _updateNode, onNodeComplete }: CharacterPackDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_CHARACTER_PACK_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[CharacterPackDetail] updateNode not provided:', patch);
+  });
   const { characters, voices, loadVoices } = useProjectStore();
 
   useEffect(() => {

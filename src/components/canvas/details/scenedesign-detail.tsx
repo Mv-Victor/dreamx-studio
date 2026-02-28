@@ -7,8 +7,16 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import type { SceneDesignData } from '@/types/canvas';
 
 interface SceneDesignDetailProps {
+  _nodeData?: SceneDesignData;
+  _updateNode?: (patch: Partial<SceneDesignData>) => void;
   onNodeComplete?: () => void;
 }
+
+const DEFAULT_SCENE_DESIGN_DATA: SceneDesignData = {
+  label: '场景设计',
+  status: 'generating',
+  scenes: [],
+};
 
 const SCENE_DESIGN_MOCK_DATA = [
   { id: 1, header: '外景 - 荒山古道 - 黄昏', status: 'completed' as const },
@@ -17,7 +25,15 @@ const SCENE_DESIGN_MOCK_DATA = [
   { id: 4, header: '内景 - 客栈 - 午后', status: 'pending' as const },
 ];
 
-export function SceneDesignDetail({ onNodeComplete }: SceneDesignDetailProps) {
+export function SceneDesignDetail({ _nodeData, _updateNode, onNodeComplete }: SceneDesignDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_SCENE_DESIGN_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[SceneDesignDetail] updateNode not provided:', patch);
+  });
+
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={ImageIcon} label="Scene Design">

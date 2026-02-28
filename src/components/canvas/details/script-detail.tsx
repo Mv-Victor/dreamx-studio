@@ -8,10 +8,25 @@ import { Badge } from '@/components/ui/badge';
 import type { ScriptData } from '@/types/canvas';
 
 interface ScriptDetailProps {
+  _nodeData?: ScriptData;
+  _updateNode?: (patch: Partial<ScriptData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function ScriptDetail({ onNodeComplete }: ScriptDetailProps) {
+const DEFAULT_SCRIPT_DATA: ScriptData = {
+  label: '剧本',
+  status: 'generating',
+  episodes: [],
+};
+
+export function ScriptDetail({ _nodeData, _updateNode, onNodeComplete }: ScriptDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_SCRIPT_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[ScriptDetail] updateNode not provided:', patch);
+  });
   const { episodes } = useProjectStore();
   const episode = episodes[0];
 

@@ -8,10 +8,25 @@ import { Badge } from '@/components/ui/badge';
 import type { PlanningCenterData } from '@/types/canvas';
 
 interface PlanningCenterDetailProps {
+  _nodeData?: PlanningCenterData;
+  _updateNode?: (patch: Partial<PlanningCenterData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function PlanningCenterDetail({ onNodeComplete }: PlanningCenterDetailProps) {
+const DEFAULT_PLANNING_CENTER_DATA: PlanningCenterData = {
+  label: '规划中心',
+  status: 'generating',
+  episodes: [],
+};
+
+export function PlanningCenterDetail({ _nodeData, _updateNode, onNodeComplete }: PlanningCenterDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_PLANNING_CENTER_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[PlanningCenterDetail] updateNode not provided:', patch);
+  });
   const [activeTab, setActiveTab] = useState('overview');
 
   const tabs = [

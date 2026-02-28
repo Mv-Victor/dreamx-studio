@@ -7,10 +7,25 @@ import { Badge } from '@/components/ui/badge';
 import type { ComposeData } from '@/types/canvas';
 
 interface ComposeDetailProps {
+  _nodeData?: ComposeData;
+  _updateNode?: (patch: Partial<ComposeData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function ComposeDetail({ onNodeComplete }: ComposeDetailProps) {
+const DEFAULT_COMPOSE_DATA: ComposeData = {
+  label: '合成',
+  status: 'pending',
+  video_url: '',
+};
+
+export function ComposeDetail({ _nodeData, _updateNode, onNodeComplete }: ComposeDetailProps) {
+  // TODO: Implement data binding when backend integration is ready
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = { ...DEFAULT_COMPOSE_DATA, ..._nodeData };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[ComposeDetail] updateNode not provided:', patch);
+  });
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Film} label="Preview">
