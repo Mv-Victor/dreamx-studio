@@ -13,7 +13,11 @@ interface PlanningCenterDetailProps {
   onNodeComplete?: () => void;
 }
 
-export function PlanningCenterDetail({ onNodeComplete }: PlanningCenterDetailProps) {
+export function PlanningCenterDetail({ nodeData, updateNode, onNodeComplete }: PlanningCenterDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   const [activeTab, setActiveTab] = useState('overview');
 
   const tabs = [

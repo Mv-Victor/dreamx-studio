@@ -19,7 +19,11 @@ const mockScenes = [
   { id: 4, header: '内景 - 客栈 - 午后', status: 'pending' as const },
 ];
 
-export function SceneDesignDetail({ onNodeComplete }: SceneDesignDetailProps) {
+export function SceneDesignDetail({ nodeData, updateNode, onNodeComplete }: SceneDesignDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={ImageIcon} label="Scene Design">

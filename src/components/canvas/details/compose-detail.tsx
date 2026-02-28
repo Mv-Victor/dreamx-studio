@@ -12,7 +12,11 @@ interface ComposeDetailProps {
   onNodeComplete?: () => void;
 }
 
-export function ComposeDetail({ onNodeComplete }: ComposeDetailProps) {
+export function ComposeDetail({ nodeData, updateNode, onNodeComplete }: ComposeDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Film} label="Preview">

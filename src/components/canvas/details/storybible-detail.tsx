@@ -39,7 +39,11 @@ const mockStoryBibles = [
   },
 ];
 
-export function StoryBibleDetail({ onNodeComplete }: StoryBibleDetailProps) {
+export function StoryBibleDetail({ nodeData, updateNode, onNodeComplete }: StoryBibleDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={BookOpen} label="Story Options">

@@ -21,7 +21,11 @@ const mockSegments = [
   { id: 5, description: '白骨夫人缓缓睁开冰蓝色的眼睛', shotType: '大特写', camera: '固定', duration: '3s', status: 'pending' as const },
 ];
 
-export function SegmentDesignDetail({ onNodeComplete }: SegmentDesignDetailProps) {
+export function SegmentDesignDetail({ nodeData, updateNode, onNodeComplete }: SegmentDesignDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Clapperboard} label="Segments">

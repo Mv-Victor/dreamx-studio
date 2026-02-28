@@ -14,7 +14,11 @@ interface CharacterPackDetailProps {
   onNodeComplete?: () => void;
 }
 
-export function CharacterPackDetail({ onNodeComplete }: CharacterPackDetailProps) {
+export function CharacterPackDetail({ nodeData, updateNode, onNodeComplete }: CharacterPackDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   const { characters, voices, loadVoices } = useProjectStore();
 
   useEffect(() => {

@@ -13,7 +13,11 @@ interface ScriptDetailProps {
   onNodeComplete?: () => void;
 }
 
-export function ScriptDetail({ onNodeComplete }: ScriptDetailProps) {
+export function ScriptDetail({ nodeData, updateNode, onNodeComplete }: ScriptDetailProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _data = nodeData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _updateNode = updateNode;
   const { episodes } = useProjectStore();
   const episode = episodes[0];
 
