@@ -349,28 +349,6 @@ const CanvasInner = React.memo(function CanvasInner() {
         />
       </div>
 
-      {/* Left Sidebar Navigation */}
-      <aside className="fixed left-6 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-3 px-3 py-4 rounded-2xl border border-[var(--drama-border)] bg-[var(--drama-bg-primary)]/80 backdrop-blur-md shadow-lg">
-        <button
-          onClick={() => router.push('/projects')}
-          className="p-2 rounded-lg hover:bg-[var(--drama-bg-white-5)] cursor-pointer transition-colors"
-          title="返回项目"
-        >
-          <ChevronLeft className="h-5 w-5 text-[var(--drama-text-secondary)]" />
-        </button>
-        <div className="h-px w-6 bg-[var(--drama-border)]" />
-        <button
-          onClick={() => {
-            // Fit view handled by Controls component
-            window.dispatchEvent(new CustomEvent('fit-view'));
-          }}
-          className="p-2 rounded-lg hover:bg-[var(--drama-bg-white-5)] cursor-pointer transition-colors"
-          title="缩放适配"
-        >
-          <Maximize className="h-5 w-5 text-[var(--drama-text-secondary)]" />
-        </button>
-      </aside>
-
       {/* Generation Task List */}
       <GenerationTaskList />
 
