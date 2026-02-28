@@ -66,25 +66,25 @@ export function DetailPanel({ selectedNodeId, onClose, onNodeComplete }: DetailP
           <CheckPointDetail nodeData={nodeData as CheckPointData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'storybible' && (
-          <StoryBibleDetail nodeData={nodeData as StoryBibleData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <StoryBibleDetail _nodeData={nodeData as StoryBibleData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'characterpack' && (
-          <CharacterPackDetail nodeData={nodeData as CharacterPackData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <CharacterPackDetail _nodeData={nodeData as CharacterPackData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'planningcenter' && (
-          <PlanningCenterDetail nodeData={nodeData as PlanningCenterData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <PlanningCenterDetail _nodeData={nodeData as PlanningCenterData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'script' && (
-          <ScriptDetail nodeData={nodeData as ScriptData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <ScriptDetail _nodeData={nodeData as ScriptData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'scenedesign' && (
-          <SceneDesignDetail nodeData={nodeData as SceneDesignData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <SceneDesignDetail _nodeData={nodeData as SceneDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'segmentdesign' && (
-          <SegmentDesignDetail nodeData={nodeData as SegmentDesignData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <SegmentDesignDetail _nodeData={nodeData as SegmentDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'compose' && (
-          <ComposeDetail nodeData={nodeData as ComposeData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <ComposeDetail _nodeData={nodeData as ComposeData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
       </div>
     </div>

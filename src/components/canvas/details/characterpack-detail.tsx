@@ -9,16 +9,13 @@ import { Badge } from '@/components/ui/badge';
 import type { CharacterPackData } from '@/types/canvas';
 
 interface CharacterPackDetailProps {
-  nodeData?: CharacterPackData;
-  updateNode?: (patch: Partial<CharacterPackData>) => void;
+  _nodeData?: CharacterPackData;
+  _updateNode?: (patch: Partial<CharacterPackData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function CharacterPackDetail({ nodeData, updateNode, onNodeComplete }: CharacterPackDetailProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _data = nodeData;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _updateNode = updateNode;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function CharacterPackDetail({ _nodeData, _updateNode, onNodeComplete }: CharacterPackDetailProps) {
   const { characters, voices, loadVoices } = useProjectStore();
 
   useEffect(() => {

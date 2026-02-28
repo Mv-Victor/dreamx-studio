@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import type { SegmentDesignData } from '@/types/canvas';
 
 interface SegmentDesignDetailProps {
-  nodeData?: SegmentDesignData;
-  updateNode?: (patch: Partial<SegmentDesignData>) => void;
+  _nodeData?: SegmentDesignData;
+  _updateNode?: (patch: Partial<SegmentDesignData>) => void;
   onNodeComplete?: () => void;
 }
 
@@ -21,11 +21,8 @@ const mockSegments = [
   { id: 5, description: '白骨夫人缓缓睁开冰蓝色的眼睛', shotType: '大特写', camera: '固定', duration: '3s', status: 'pending' as const },
 ];
 
-export function SegmentDesignDetail({ nodeData, updateNode, onNodeComplete }: SegmentDesignDetailProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _data = nodeData;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _updateNode = updateNode;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function SegmentDesignDetail({ _nodeData, _updateNode, onNodeComplete }: SegmentDesignDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Clapperboard} label="Segments">

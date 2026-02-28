@@ -8,16 +8,13 @@ import { Badge } from '@/components/ui/badge';
 import type { PlanningCenterData } from '@/types/canvas';
 
 interface PlanningCenterDetailProps {
-  nodeData?: PlanningCenterData;
-  updateNode?: (patch: Partial<PlanningCenterData>) => void;
+  _nodeData?: PlanningCenterData;
+  _updateNode?: (patch: Partial<PlanningCenterData>) => void;
   onNodeComplete?: () => void;
 }
 
-export function PlanningCenterDetail({ nodeData, updateNode, onNodeComplete }: PlanningCenterDetailProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _data = nodeData;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _updateNode = updateNode;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function PlanningCenterDetail({ _nodeData, _updateNode, onNodeComplete }: PlanningCenterDetailProps) {
   const [activeTab, setActiveTab] = useState('overview');
 
   const tabs = [

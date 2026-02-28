@@ -7,8 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import type { StoryBibleData } from '@/types/canvas';
 
 interface StoryBibleDetailProps {
-  nodeData?: StoryBibleData;
-  updateNode?: (patch: Partial<StoryBibleData>) => void;
+  _nodeData?: StoryBibleData;
+  _updateNode?: (patch: Partial<StoryBibleData>) => void;
   onNodeComplete?: () => void;
 }
 
@@ -39,11 +39,8 @@ const mockStoryBibles = [
   },
 ];
 
-export function StoryBibleDetail({ nodeData, updateNode, onNodeComplete }: StoryBibleDetailProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _data = nodeData;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _updateNode = updateNode;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function StoryBibleDetail({ _nodeData, _updateNode, onNodeComplete }: StoryBibleDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={BookOpen} label="Story Options">

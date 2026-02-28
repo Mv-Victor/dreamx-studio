@@ -246,19 +246,14 @@ const CanvasInner = React.memo(function CanvasInner() {
     setContextMenu({ x: event.clientX, y: event.clientY });
   }, []);
 
+  const { screenToFlowPosition } = useReactFlow();
+
   const handleAddNode = useCallback(
     (type: string) => {
       if (!contextMenu) return;
 
-      const { x, y } = contextMenu;
-      // Convert screen coordinates to React Flow coordinates
-      const reactFlowBounds = document.querySelector('.react-flow')?.getBoundingClientRect();
-      if (!reactFlowBounds) return;
-
-      const position = {
-        x: x - reactFlowBounds.left,
-        y: y - reactFlowBounds.top,
-      };
+      // Use React Flow API to convert screen coordinates to flow coordinates
+      const position = screenToFlowPosition({ x: contextMenu.x, y: contextMenu.y });
 
       const newNode = {
         id: `node-${Date.now()}`,
@@ -274,7 +269,7 @@ const CanvasInner = React.memo(function CanvasInner() {
       addNodes([newNode]);
       setContextMenu(null);
     },
-    [contextMenu, addNodes]
+    [contextMenu, addNodes, screenToFlowPosition]
   );
 
   // 节点状态变更处理（用于解锁下一个节点）
