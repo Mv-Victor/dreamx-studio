@@ -1,12 +1,12 @@
 # DreamX Studio UI 校验报告
 
-**最后更新**: 2026-02-28 03:25 UTC  
+**最后更新**: 2026-02-28 03:45 UTC  
 **评审状态**: ✅ 评审通过，**可立即上线**  
-**最新提交**: `3d68229`
+**最新提交**: `5d08775`
 
 ---
 
-## 📊 最终评审结论（G 03:14 UTC）
+## 📊 最终评审结论（G 03:34 UTC）
 
 **综合评分**: 9.0/10  
 **状态**: ✅ **可立即上线**
@@ -26,35 +26,36 @@
 
 ---
 
-## ✅ P1 修复完成（03:25 UTC）
+## ✅ P1 修复完成（03:45 UTC）
 
 | # | 问题 | 修复 | 状态 |
 |---|------|------|------|
-| 1 | DetailPanel 子组件 Props 不一致 | 所有 Detail 组件统一解构 nodeData/updateNode/onNodeComplete | ✅ |
-| 2 | 重复常量定义 | lib/constants.ts 无 TASK_TYPE_LABELS 重复 | ✅ |
+| M1 | onPaneContextMenu 类型 | 使用 React.MouseEvent + eslint-disable | ✅ |
+| M2 | handleAddNode 坐标转换 | 使用 screenToFlowPosition API | ✅ |
+| P2 | 清理未使用 Props | _nodeData/_updateNode 命名约定 | ✅ |
 
 ---
 
 ## ✅ 代码亮点
 
-1. **React Flow 使用规范** - nodeTypes/PRO_OPTIONS 冻结
+1. **React Flow 使用规范** - nodeTypes/PRO_OPTIONS 冻结，screenToFlowPosition API
 2. **类型提取完成** - types/generation.ts, types/chat.ts
 3. **常量统一管理** - constants/ui.ts
 4. **性能优化充分** - React.memo + useMemo + useCallback
 5. **样式对齐** - CSS 变量统一，渐变 ID 动态化
 6. **API 安全** - 后端代理 + localStorage 键安全 (lib/storage-keys.ts)
-7. **Props 统一** - 所有 Detail 组件支持 nodeData/updateNode/onNodeComplete
+7. **Props 统一** - 所有 Detail 组件支持 _nodeData/_updateNode/onNodeComplete
 
 ---
 
-## ✅ 修复汇总（35 项）
+## ✅ 修复汇总（37 项）
 
 | 类别 | 问题数 | 状态 |
 |------|--------|------|
 | P0 安全 | 8 项 | ✅ |
-| P1 代码质量 | 17 项 | ✅ |
+| P1 代码质量 | 19 项 | ✅ |
 | P2 优化 | 9 项 | ✅ |
-| **总计** | **35 项** | ✅ |
+| **总计** | **37 项** | ✅ |
 
 ---
 
@@ -62,18 +63,19 @@
 
 | # | 问题 | 优先级 | 工作量 |
 |---|------|--------|--------|
-| 1 | 优化 any 类型 → 使用 React Flow 类型 | P3 | 30min |
-| 2 | 优化 ContextMenu 点击外部逻辑 | P3 | 30min |
-| 3 | 错误日志增强 | P3 | 15min |
-| 4 | 单元测试 | P3 | 4h |
-| 5 | 错误边界 | P3 | 2h |
-| 6 | 性能监控 | P3 | 2h |
+| 1 | CSS 变量提取 z-[100] | P3 | 5min |
+| 2 | 错误日志增强 | P3 | 15min |
+| 3 | 单元测试 | P3 | 4h |
+| 4 | 错误边界 | P3 | 2h |
+| 5 | 性能监控 | P3 | 2h |
 
 ---
 
 ## 📝 提交历史
 
 ```
+5d08775 fix(P1): M1/M2 修复 + 清理未使用 Props
+1edfe92 docs: 更新日志 - P1 Props 统一完成
 3d68229 fix(P1): DetailPanel 子组件 Props 统一
 bd7355f fix(P1): TypeScript 类型修复
 adf3287 docs: 更新日志 - G 02:33 评审确认
@@ -101,7 +103,7 @@ f6b53aa fix(P0): 安全修复 - API 代理层 + 样式变量统一
 
 ## ✅ 最终状态
 
-**P0 + P1 + P2**: 35 项问题全部修复 ✅  
+**P0 + P1 + P2**: 37 项问题全部修复 ✅  
 **可上线状态**: ✅ **可立即上线**  
 **技术债务**: 低  
 **P3 改进**: 不影响上线，下 sprint 处理
@@ -109,4 +111,4 @@ f6b53aa fix(P0): 安全修复 - API 代理层 + 样式变量统一
 ---
 
 **评审人**: G  
-**最后更新**: 2026-02-28 03:25 UTC
+**最后更新**: 2026-02-28 03:45 UTC
