@@ -22,16 +22,22 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
     console.warn('[CheckPointDetail] updateNode not provided:', patch);
   });
 
+  // Type guards for safe type narrowing
+  const isValidLanguage = (lang: string): lang is 'zh-CN' | 'en-US' =>
+    ['zh-CN', 'en-US'].includes(lang);
+  const isValidRating = (rating: string): rating is 'PG' | 'PG-13' | 'R' =>
+    ['PG', 'PG-13', 'R'].includes(rating);
+
   return (
     <div className="p-5 space-y-5">
       {/* Language */}
       <DetailSection icon={Type} label="Language">
         <SegmentedControl
           options={[
-            { value: 'zh-CN', label: '中文' },
-            { value: 'en-US', label: 'English' },
+            { value: 'zh-CN' as const, label: '中文' },
+            { value: 'en-US' as const, label: 'English' },
           ]}
-          value={(data.language || 'zh-CN') as 'zh-CN' | 'en-US'}
+          value={isValidLanguage(data.language) ? data.language : 'zh-CN'}
           onChange={(val) => updateNode({ language: val })}
         />
       </DetailSection>
@@ -40,11 +46,11 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
       <DetailSection icon={Shield} label="Content Rating">
         <SegmentedControl
           options={[
-            { value: 'PG', label: 'PG' },
-            { value: 'PG-13', label: 'PG-13' },
-            { value: 'R', label: 'R' },
+            { value: 'PG' as const, label: 'PG' },
+            { value: 'PG-13' as const, label: 'PG-13' },
+            { value: 'R' as const, label: 'R' },
           ]}
-          value={(data.rating || 'PG') as 'PG' | 'PG-13' | 'R'}
+          value={isValidRating(data.rating) ? data.rating : 'PG'}
           onChange={(val) => updateNode({ rating: val })}
         />
       </DetailSection>
