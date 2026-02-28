@@ -56,11 +56,11 @@ export const CharacterPackDetail = ({ _nodeData, _updateNode, onNodeComplete }: 
           {characters.map((char) => (
             <div
               key={char.id}
-              className="rounded-xl border border-[var(var(--border-white-10))] bg-[var(var(--bg-white-5))] shadow-lg p-3 space-y-2"
+              className="rounded-xl border border-[var(--border-white-10)] bg-[var(--bg-white-5)] shadow-lg p-3 space-y-2"
             >
               <div className="flex items-start gap-3">
                 {/* Avatar */}
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(var(--bg-white-5))] to-[var(var(--bg-white-10))] flex items-center justify-center flex-shrink-0 border border-[var(var(--border-white-10))]">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[var(--bg-white-5)] to-[var(--bg-white-10)] flex items-center justify-center flex-shrink-0 border border-[var(--border-white-10)]">
                   {char.image_url ? (
                     <span className="text-xl">👤</span>
                   ) : (
