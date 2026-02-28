@@ -63,7 +63,7 @@ export function DetailPanel({ selectedNodeId, onClose, onNodeComplete }: DetailP
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
         {nodeType === 'checkpoint' && (
-          <CheckPointDetail nodeData={nodeData as CheckPointData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          <CheckPointDetail _nodeData={nodeData as CheckPointData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
         {nodeType === 'storybible' && (
           <StoryBibleDetail _nodeData={nodeData as StoryBibleData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />

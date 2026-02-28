@@ -17,7 +17,7 @@ interface CheckPointDetailProps {
 export function CheckPointDetail({ _nodeData, _updateNode, onNodeComplete }: CheckPointDetailProps) {
   // TODO: Implement node data binding when backend integration is ready
   // For now, using mock data
-  const data = _nodeData;
+  const data = _nodeData || {} as CheckPointData;
   const updateNode = _updateNode || (() => {});
 
   return (
