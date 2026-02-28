@@ -1,11 +1,9 @@
 /**
- * Chat message types and interfaces
+ * Chat message types
  */
-
 export type ChatMessageRole = 'user' | 'assistant';
 
 export interface ChatMessage {
   role: ChatMessageRole;
   content: string;
-  timestamp?: number;
 }
