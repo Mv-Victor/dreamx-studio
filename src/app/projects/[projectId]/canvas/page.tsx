@@ -22,6 +22,7 @@ import { useProjectStore } from '@/stores/project-store';
 import { ChatPanel } from '@/components/canvas/chat-panel';
 import { DetailPanel } from '@/components/canvas/detail-panel';
 import { CanvasToolbar } from '@/components/canvas/canvas-toolbar';
+import { ContextMenu } from '@/components/canvas/context-menu';
 import { CheckPointNode } from '@/components/canvas/nodes/checkpoint-node';
 import { StoryBibleNode } from '@/components/canvas/nodes/storybible-node';
 import { CharacterPackNode } from '@/components/canvas/nodes/characterpack-node';
@@ -66,9 +67,15 @@ const CanvasInner = React.memo(function CanvasInner() {
   const projectId = params.projectId as string;
   const { projects, selectProject, currentProject, loadProjects, setSelectedNodeId } = useProjectStore();
   const [chatOpen, setChatOpen] = useState(true);
-  const { updateNodeData, getNodes, setViewport } = useReactFlow();
+  const { updateNodeData, getNodes, setViewport, addNodes } = useReactFlow();
   const initialLoadRef = useRef(true);
   const viewportSaveRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Context menu state
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
+
+  // Connection feedback state
+  const [connectionStatus, setConnectionStatus] = useState<'valid' | 'invalid' | null>(null);
 
   useEffect(() => {
     if (projects.length === 0) loadProjects();
@@ -188,9 +195,28 @@ const CanvasInner = React.memo(function CanvasInner() {
       const targetIdx = parseInt(target.split('-')[1] || '-1', 10);
 
       // 只允许顺序连接（下一个节点）
-      return targetIdx === sourceIdx + 1;
+      const valid = targetIdx === sourceIdx + 1;
+      setConnectionStatus(valid ? 'valid' : 'invalid');
+      return valid;
     },
     []
+  );
+
+  const onConnectStart = useCallback(() => {
+    setConnectionStatus(null);
+  }, []);
+
+  const onConnectEnd = useCallback(
+    (edge: Edge | Connection) => {
+      const valid = isValidConnection(edge);
+      if (!valid) {
+        // Show toast for invalid connection
+        console.warn('[Canvas] Invalid connection attempted:', edge);
+        // Toast will be added in future iteration
+      }
+      setConnectionStatus(null);
+    },
+    [isValidConnection]
   );
 
   const onNodeClick = useCallback(
@@ -213,6 +239,42 @@ const CanvasInner = React.memo(function CanvasInner() {
   const onPaneClick = useCallback(() => {
     setSelectedNodeId(null);
   }, [setSelectedNodeId]);
+
+  const onPaneContextMenu = useCallback((event: React.MouseEvent) => {
+    event.preventDefault();
+    setContextMenu({ x: event.clientX, y: event.clientY });
+  }, []);
+
+  const handleAddNode = useCallback(
+    (type: string) => {
+      if (!contextMenu) return;
+
+      const { x, y } = contextMenu;
+      // Convert screen coordinates to React Flow coordinates
+      const reactFlowBounds = document.querySelector('.react-flow')?.getBoundingClientRect();
+      if (!reactFlowBounds) return;
+
+      const position = {
+        x: x - reactFlowBounds.left,
+        y: y - reactFlowBounds.top,
+      };
+
+      const newNode = {
+        id: `node-${Date.now()}`,
+        type,
+        position,
+        data: {
+          label: type.charAt(0).toUpperCase() + type.slice(1),
+          status: 'pending' as const,
+          locked: false,
+        },
+      };
+
+      addNodes([newNode]);
+      setContextMenu(null);
+    },
+    [contextMenu, addNodes]
+  );
 
   // 节点状态变更处理（用于解锁下一个节点）
   const handleNodeComplete = useCallback(
@@ -256,9 +318,16 @@ const CanvasInner = React.memo(function CanvasInner() {
             onEdgesChange={onEdgesChange}
             onNodeClick={onNodeClick}
             onPaneClick={onPaneClick}
+            onPaneContextMenu={onPaneContextMenu}
+            onConnectStart={onConnectStart}
+            onConnectEnd={onConnectEnd}
             onViewportChange={onViewportChange}
             nodeTypes={nodeTypes}
             isValidConnection={isValidConnection}
+            connectionLineStyle={{
+              stroke: connectionStatus === 'valid' ? '#22c55e' : connectionStatus === 'invalid' ? '#ef4444' : 'rgba(255,255,255,0.5)',
+              strokeWidth: 2,
+            }}
             fitView
             fitViewOptions={{ padding: 0.3 }}
             minZoom={0.3}
@@ -284,6 +353,16 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       {/* Generation Task List */}
       <GenerationTaskList />
+
+      {/* Context Menu */}
+      {contextMenu && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+          onSelect={handleAddNode}
+        />
+      )}
     </div>
   );
 });
