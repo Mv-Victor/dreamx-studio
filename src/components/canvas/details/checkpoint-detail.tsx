@@ -14,11 +14,23 @@ interface CheckPointDetailProps {
   onNodeComplete?: () => void;
 }
 
+const DEFAULT_CHECKPOINT_DATA: CheckPointData = {
+  label: '创意构思',
+  status: 'generating',
+  language: 'zh-CN',
+  rating: 'PG',
+  camera_frame_ratio: '9:16',
+  episode_count: 1,
+  episode_duration: 60,
+  visual_style_id: 0,
+  idea_text: '',
+};
+
 export function CheckPointDetail({ _nodeData, _updateNode, onNodeComplete }: CheckPointDetailProps) {
-  // TODO: Implement node data binding when backend integration is ready
-  // For now, using mock data
-  const data = _nodeData || {} as CheckPointData;
-  const updateNode = _updateNode || (() => {});
+  const data = { ...DEFAULT_CHECKPOINT_DATA, ..._nodeData };
+  const updateNode = _updateNode || ((patch) => {
+    console.warn('[CheckPointDetail] updateNode not provided:', patch);
+  });
 
   return (
     <div className="p-5 space-y-5">
