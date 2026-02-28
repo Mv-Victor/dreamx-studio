@@ -1,8 +1,10 @@
 'use client';
 
+import { useReactFlow } from '@xyflow/react';
 import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import type { WorkflowNodeData } from '@/types/canvas';
 
 const DetailLoading = () => (
   <div className="flex items-center justify-center h-40">
@@ -20,13 +22,27 @@ const SegmentDesignDetail = dynamic(() => import('./details/segmentdesign-detail
 const ComposeDetail = dynamic(() => import('./details/compose-detail').then(m => ({ default: m.ComposeDetail })), { loading: DetailLoading });
 
 interface DetailPanelProps {
-  selectedNodeType: string | null;
+  selectedNodeId: string | null;
   onClose: () => void;
   onNodeComplete?: (nodeId: string) => void;
 }
 
-export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: DetailPanelProps) {
-  if (!selectedNodeType) return null;
+export function DetailPanel({ selectedNodeId, onClose, onNodeComplete }: DetailPanelProps) {
+  const { getNode, updateNodeData } = useReactFlow();
+
+  if (!selectedNodeId) return null;
+
+  const node = getNode(selectedNodeId);
+  if (!node) return null;
+
+  const nodeType = node.type;
+  const nodeData = node.data as WorkflowNodeData;
+  const displayLabel = nodeData?.label || nodeType || '节点详情';
+
+  // Helper to update node data
+  const updateNode = (patch: Partial<WorkflowNodeData>) => {
+    updateNodeData(selectedNodeId, { ...nodeData, ...patch });
+  };
 
   return (
     <div className="w-[360px] border-l border-white/10 bg-[#0a0a0f] flex flex-col animate-slide-right">
@@ -34,7 +50,7 @@ export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: Detai
       <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-white-10)] bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <div className="w-1 h-3.5 rounded-full bg-[var(--brand-primary)]" />
-          <h3 className="text-sm font-semibold text-white/90 capitalize">{selectedNodeType.replace(/([A-Z])/g, ' $1').trim()}</h3>
+          <h3 className="text-sm font-semibold text-white/90">{displayLabel}</h3>
         </div>
         <button
           onClick={onClose}
@@ -46,14 +62,16 @@ export function DetailPanel({ selectedNodeType, onClose, onNodeComplete }: Detai
       
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        {selectedNodeType === 'checkpoint' && <CheckPointDetail onNodeComplete={onNodeComplete} />}
-        {selectedNodeType === 'storybible' && <StoryBibleDetail />}
-        {selectedNodeType === 'characterpack' && <CharacterPackDetail />}
-        {selectedNodeType === 'planningcenter' && <PlanningCenterDetail />}
-        {selectedNodeType === 'script' && <ScriptDetail />}
-        {selectedNodeType === 'scenedesign' && <SceneDesignDetail />}
-        {selectedNodeType === 'segmentdesign' && <SegmentDesignDetail />}
-        {selectedNodeType === 'compose' && <ComposeDetail />}
+        {nodeType === 'checkpoint' && (
+          <CheckPointDetail nodeData={nodeData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'storybible' && <StoryBibleDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'characterpack' && <CharacterPackDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'planningcenter' && <PlanningCenterDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'script' && <ScriptDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'scenedesign' && <SceneDesignDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'segmentdesign' && <SegmentDesignDetail nodeData={nodeData} updateNode={updateNode} />}
+        {nodeType === 'compose' && <ComposeDetail nodeData={nodeData} updateNode={updateNode} />}
       </div>
     </div>
   );

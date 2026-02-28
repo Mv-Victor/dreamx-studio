@@ -18,6 +18,7 @@ interface ProjectStore {
   voices: Voice[];
   chatMessages: ChatMessage[];
   generationTasks: GenerationTask[];
+  selectedNodeId: string | null;
 
   // Actions
   loadProjects: () => void;
@@ -30,6 +31,7 @@ interface ProjectStore {
   addGenerationTask: (task: GenerationTask) => void;
   updateGenerationTask: (taskId: string, patch: Partial<GenerationTask>) => void;
   removeGenerationTask: (taskId: string) => void;
+  setSelectedNodeId: (nodeId: string | null) => void;
 }
 
 export const useProjectStore = create<ProjectStore>()(
@@ -43,6 +45,7 @@ export const useProjectStore = create<ProjectStore>()(
     voices: [],
     chatMessages: [],
     generationTasks: [],
+    selectedNodeId: null,
 
     loadProjects: () => {
       set((state) => {
@@ -143,6 +146,12 @@ export const useProjectStore = create<ProjectStore>()(
     removeGenerationTask: (taskId) => {
       set((state) => {
         state.generationTasks = state.generationTasks.filter((t) => t.task_id !== taskId);
+      });
+    },
+
+    setSelectedNodeId: (nodeId) => {
+      set((state) => {
+        state.selectedNodeId = nodeId;
       });
     },
   }))

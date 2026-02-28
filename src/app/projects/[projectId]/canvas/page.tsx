@@ -64,8 +64,7 @@ const CanvasInner = React.memo(function CanvasInner() {
   const params = useParams();
   const router = useRouter();
   const projectId = params.projectId as string;
-  const { projects, selectProject, currentProject, loadProjects } = useProjectStore();
-  const [selectedNodeType, setSelectedNodeType] = useState<string | null>(null);
+  const { projects, selectProject, currentProject, loadProjects, setSelectedNodeId } = useProjectStore();
   const [chatOpen, setChatOpen] = useState(true);
   const { updateNodeData, getNodes, setViewport } = useReactFlow();
   const initialLoadRef = useRef(true);
@@ -194,23 +193,26 @@ const CanvasInner = React.memo(function CanvasInner() {
     []
   );
 
-  const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
-    const data = node.data as WorkflowNodeData;
-    // Don't open detail for locked nodes or entry
-    if ('locked' in data && data.locked) {
-      setSelectedNodeType(null);
-      return;
-    }
-    if (node.type === 'entry') {
-      setSelectedNodeType(null);
-      return;
-    }
-    setSelectedNodeType(node.type || null);
-  }, []);
+  const onNodeClick = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      const data = node.data as WorkflowNodeData;
+      // Don't open detail for locked nodes or entry
+      if ('locked' in data && data.locked) {
+        setSelectedNodeId(null);
+        return;
+      }
+      if (node.type === 'entry') {
+        setSelectedNodeId(null);
+        return;
+      }
+      setSelectedNodeId(node.id);
+    },
+    [setSelectedNodeId]
+  );
 
   const onPaneClick = useCallback(() => {
-    setSelectedNodeType(null);
-  }, []);
+    setSelectedNodeId(null);
+  }, [setSelectedNodeId]);
 
   // 节点状态变更处理（用于解锁下一个节点）
   const handleNodeComplete = useCallback(
@@ -274,8 +276,8 @@ const CanvasInner = React.memo(function CanvasInner() {
         </div>
 
         <DetailPanel
-          selectedNodeType={selectedNodeType}
-          onClose={() => setSelectedNodeType(null)}
+          selectedNodeId={selectedNodeId}
+          onClose={() => setSelectedNodeId(null)}
           onNodeComplete={handleNodeComplete}
         />
       </div>

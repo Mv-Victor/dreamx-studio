@@ -1,25 +1,23 @@
 'use client';
 
-import { useProjectStore } from '@/stores/project-store';
 import { useEffect } from 'react';
 import { Sparkles, ChevronRight, Monitor, Shield, Film, Clock, Type, Image as ImageIcon, FileText } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SegmentedControl } from '@/components/ui/segmented-control';
+import type { WorkflowNodeData } from '@/types/canvas';
+import { visualStyles } from '@/mock/visual-styles';
 
 interface CheckPointDetailProps {
-  onNodeComplete?: (nodeId: string) => void;
+  nodeData: WorkflowNodeData;
+  updateNode: (patch: Partial<WorkflowNodeData>) => void;
+  onNodeComplete?: () => void;
 }
 
-export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
-  const { checkPoint, updateCheckPoint, visualStyles, loadVisualStyles } = useProjectStore();
-
-  useEffect(() => {
-    if (visualStyles.length === 0) loadVisualStyles();
-  }, [visualStyles.length, loadVisualStyles]);
-
-  if (!checkPoint) return null;
+export function CheckPointDetail({ nodeData, updateNode, onNodeComplete }: CheckPointDetailProps) {
+  // Cast to CheckPoint specific data shape
+  const data = nodeData as any;
 
   return (
     <div className="p-5 space-y-5">
@@ -30,8 +28,8 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
             { value: 'zh-CN', label: '中文' },
             { value: 'en-US', label: 'English' },
           ]}
-          value={checkPoint.language as 'zh-CN' | 'en-US'}
-          onChange={(val) => updateCheckPoint({ language: val })}
+          value={(data.language || 'zh-CN') as 'zh-CN' | 'en-US'}
+          onChange={(val) => updateNode({ language: val })}
         />
       </DetailSection>
 
@@ -43,8 +41,8 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
             { value: 'PG-13', label: 'PG-13' },
             { value: 'R', label: 'R' },
           ]}
-          value={checkPoint.rating as 'PG' | 'PG-13' | 'R'}
-          onChange={(val) => updateCheckPoint({ rating: val })}
+          value={(data.rating || 'PG') as 'PG' | 'PG-13' | 'R'}
+          onChange={(val) => updateNode({ rating: val })}
         />
       </DetailSection>
 
@@ -56,19 +54,19 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
             { value: '16:9', label: '16:9' },
             { value: '1:1', label: '1:1' },
           ]}
-          value={checkPoint.camera_frame_ratio}
-          onChange={(val) => updateCheckPoint({ camera_frame_ratio: val })}
+          value={data.camera_frame_ratio || '9:16'}
+          onChange={(val) => updateNode({ camera_frame_ratio: val })}
         />
       </DetailSection>
 
       {/* Episode Count */}
-      <DetailSection icon={Film} label={`Episodes: ${checkPoint.episode_count}`}>
+      <DetailSection icon={Film} label={`Episodes: ${data.episode_count || 1}`}>
         <input
           type="range"
           min={1}
           max={12}
-          value={checkPoint.episode_count}
-          onChange={(e) => updateCheckPoint({ episode_count: parseInt(e.target.value) })}
+          value={data.episode_count || 1}
+          onChange={(e) => updateNode({ episode_count: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
           style={{ background: 'var(--bg-white-10)' }}
         />
@@ -79,14 +77,14 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
       </DetailSection>
 
       {/* Episode Duration */}
-      <DetailSection icon={Clock} label={`Duration: ${checkPoint.episode_duration}s`}>
+      <DetailSection icon={Clock} label={`Duration: ${data.episode_duration || 60}s`}>
         <input
           type="range"
           min={15}
           max={300}
           step={15}
-          value={checkPoint.episode_duration}
-          onChange={(e) => updateCheckPoint({ episode_duration: parseInt(e.target.value) })}
+          value={data.episode_duration || 60}
+          onChange={(e) => updateNode({ episode_duration: parseInt(e.target.value) })}
           className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
           style={{ background: 'var(--bg-white-10)' }}
         />
@@ -102,16 +100,16 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
           {visualStyles.slice(0, 4).map((style) => (
             <button
               key={style.id}
-              onClick={() => updateCheckPoint({ visual_style_id: style.id })}
+              onClick={() => updateNode({ visual_style_id: style.id })}
               className="group rounded-lg overflow-hidden border transition-all cursor-pointer"
               style={{
-                border: checkPoint.visual_style_id === style.id ? '1px solid var(--brand-primary-rgba-60)' : '1px solid var(--border-white-10)',
-                background: checkPoint.visual_style_id === style.id ? 'var(--brand-primary-rgba-20)' : 'var(--bg-white-5)',
+                border: data.visual_style_id === style.id ? '1px solid var(--brand-primary-rgba-60)' : '1px solid var(--border-white-10)',
+                background: data.visual_style_id === style.id ? 'var(--brand-primary-rgba-20)' : 'var(--bg-white-5)',
               }}
             >
               <div className="aspect-video bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center relative overflow-hidden">
                 <div className="text-2xl opacity-30">🎨</div>
-                {checkPoint.visual_style_id === style.id && (
+                {data.visual_style_id === style.id && (
                   <div className="absolute inset-0 bg-[rgba(192,3,28,0.20)] flex items-center justify-center">
                     <span className="text-white text-xs font-medium">✓</span>
                   </div>
@@ -134,8 +132,8 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
       {/* Idea Text */}
       <DetailSection icon={FileText} label="Story Idea">
         <textarea
-          value={checkPoint.idea_text}
-          onChange={(e) => updateCheckPoint({ idea_text: e.target.value })}
+          value={data.idea_text || ''}
+          onChange={(e) => updateNode({ idea_text: e.target.value })}
           placeholder="描述你的创意故事..."
           className="w-full min-h-[100px] rounded-lg border bg-white/5 px-3 py-2.5 text-xs text-white/80 placeholder:text-white/20 focus:outline-none focus:border-white/20 resize-none transition-colors"
           style={{ borderColor: 'var(--border-white-10)' }}
@@ -147,7 +145,7 @@ export function CheckPointDetail({ onNodeComplete }: CheckPointDetailProps) {
         variant="default"
         size="sm"
         className="w-full"
-        onClick={() => onNodeComplete?.('node-1')}
+        onClick={onNodeComplete}
       >
         <Sparkles className="h-4 w-4" />
         确认并继续
