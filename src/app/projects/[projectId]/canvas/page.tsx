@@ -122,12 +122,8 @@ const CanvasInner = React.memo(function CanvasInner() {
 
       initialLoadRef.current = false;
     }
-  }, [projectId]);
-  /*
-   * Intentionally omitting initialLoadRef from dependencies:
-   * - initialLoadRef is a ref, changes don't trigger re-render
-   * - This effect runs once per project to restore saved state
-   */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]); // initialLoadRef is a ref, changes don't trigger re-render
 
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {
@@ -146,12 +142,8 @@ const CanvasInner = React.memo(function CanvasInner() {
       })
     );
     setEdges(initialEdges);
-  }, [initialNodes, initialEdges, setEdges]);
-  /*
-   * Intentionally omitting setNodes from dependencies:
-   * - We use functional update setNodes(prev => ...) to preserve user progress
-   * - Adding setNodes would cause unnecessary re-runs
-   */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialNodes, initialEdges]); // setNodes uses functional update, no need to include
 
   // 保存节点位置到 localStorage
   useEffect(() => {
