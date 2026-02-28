@@ -5,8 +5,15 @@ import { Sparkles, Edit3, FileText } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { ScriptData } from '@/types/canvas';
 
-export function ScriptDetail() {
+interface ScriptDetailProps {
+  nodeData?: ScriptData;
+  updateNode?: (patch: Partial<ScriptData>) => void;
+  onNodeComplete?: () => void;
+}
+
+export function ScriptDetail({ onNodeComplete }: ScriptDetailProps) {
   const { episodes } = useProjectStore();
   const episode = episodes[0];
 
@@ -72,7 +79,7 @@ export function ScriptDetail() {
         <Button variant="outline" size="sm" className="flex-1">
           重新生成
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
+        <Button variant="default" size="sm" className="flex-1" onClick={onNodeComplete}>
           <Sparkles className="h-3.5 w-3.5" />
           确认剧本
         </Button>

@@ -5,8 +5,15 @@ import { useState } from 'react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { PlanningCenterData } from '@/types/canvas';
 
-export function PlanningCenterDetail() {
+interface PlanningCenterDetailProps {
+  nodeData?: PlanningCenterData;
+  updateNode?: (patch: Partial<PlanningCenterData>) => void;
+  onNodeComplete?: () => void;
+}
+
+export function PlanningCenterDetail({ onNodeComplete }: PlanningCenterDetailProps) {
   const [activeTab, setActiveTab] = useState('overview');
 
   const tabs = [
@@ -106,7 +113,7 @@ export function PlanningCenterDetail() {
       )}
 
       {/* Action Button */}
-      <Button variant="default" size="sm" className="w-full">
+      <Button variant="default" size="sm" className="w-full" onClick={onNodeComplete}>
         <Sparkles className="h-3.5 w-3.5" />
         确认规划
       </Button>

@@ -5,6 +5,13 @@ import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Badge } from '@/components/ui/badge';
+import type { SegmentDesignData } from '@/types/canvas';
+
+interface SegmentDesignDetailProps {
+  nodeData?: SegmentDesignData;
+  updateNode?: (patch: Partial<SegmentDesignData>) => void;
+  onNodeComplete?: () => void;
+}
 
 const mockSegments = [
   { id: 1, description: '夕阳下的荒山古道，镜头缓缓推进', shotType: '远景', camera: '推镜头', duration: '4s', status: 'completed' as const },
@@ -14,7 +21,7 @@ const mockSegments = [
   { id: 5, description: '白骨夫人缓缓睁开冰蓝色的眼睛', shotType: '大特写', camera: '固定', duration: '3s', status: 'pending' as const },
 ];
 
-export function SegmentDesignDetail() {
+export function SegmentDesignDetail({ onNodeComplete }: SegmentDesignDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Clapperboard} label="Segments">
@@ -67,7 +74,7 @@ export function SegmentDesignDetail() {
           <RefreshCw className="h-3.5 w-3.5" />
           重新生成
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
+        <Button variant="default" size="sm" className="flex-1" onClick={onNodeComplete}>
           <Sparkles className="h-3.5 w-3.5" />
           确认分镜
         </Button>

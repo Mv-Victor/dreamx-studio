@@ -6,8 +6,15 @@ import { Sparkles, Volume2, Plus, User } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { CharacterPackData } from '@/types/canvas';
 
-export function CharacterPackDetail() {
+interface CharacterPackDetailProps {
+  nodeData?: CharacterPackData;
+  updateNode?: (patch: Partial<CharacterPackData>) => void;
+  onNodeComplete?: () => void;
+}
+
+export function CharacterPackDetail({ onNodeComplete }: CharacterPackDetailProps) {
   const { characters, voices, loadVoices } = useProjectStore();
 
   useEffect(() => {
@@ -92,7 +99,7 @@ export function CharacterPackDetail() {
         <Button variant="outline" size="sm" className="flex-1">
           重新生成
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
+        <Button variant="default" size="sm" className="flex-1" onClick={onNodeComplete}>
           <Sparkles className="h-3.5 w-3.5" />
           确认角色集
         </Button>

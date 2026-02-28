@@ -4,6 +4,13 @@ import { Sparkles, RefreshCw, BookOpen } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { StoryBibleData } from '@/types/canvas';
+
+interface StoryBibleDetailProps {
+  nodeData?: StoryBibleData;
+  updateNode?: (patch: Partial<StoryBibleData>) => void;
+  onNodeComplete?: () => void;
+}
 
 const mockStoryBibles = [
   {
@@ -11,7 +18,7 @@ const mockStoryBibles = [
     title: '命运交织',
     genre: '奇幻 / 爱情',
     logline: '千年白骨精为求解脱轮回之苦，化身人形接近取经僧人，却在朝夕相处中动了真情。',
-    synopsis: '白骨夫人本是千年妖族女王，因厌倦无尽轮回，设计接近唐三藏。然而在伪装的日子里，她逐渐被唐僧的慈悲所打动，内心的孤寂开始融化...',
+    synopsis: '白骨夫人本是千年妖族女王，因厌倦无尽轮回，设计接近唐三藏。然而在朝夕相处中，她逐渐被唐僧的慈悲所打动，内心的孤寂开始融化...',
     selected: true,
   },
   {
@@ -32,7 +39,7 @@ const mockStoryBibles = [
   },
 ];
 
-export function StoryBibleDetail() {
+export function StoryBibleDetail({ onNodeComplete }: StoryBibleDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={BookOpen} label="Story Options">
@@ -50,8 +57,8 @@ export function StoryBibleDetail() {
               key={story.id}
               className="rounded-lg border p-3 cursor-pointer transition-all"
               style={{
-                border: story.selected ? '1px solid rgba(192,3,28,0.60)' : '1px solid rgba(255,255,255,0.10)',
-                background: story.selected ? 'rgba(192,3,28,0.10)' : 'rgba(255,255,255,0.02)',
+                border: story.selected ? 'var(--drama-red-border-active)' : 'var(--drama-border)',
+                background: story.selected ? 'var(--drama-red-bg)' : 'var(--drama-bg-white-5)',
               }}
             >
               <div className="flex items-center justify-between mb-2">
@@ -60,29 +67,17 @@ export function StoryBibleDetail() {
                   {story.genre}
                 </Badge>
               </div>
-              <p className="text-[10px] text-[#FF4D4D] mb-2">{story.logline}</p>
-              <p className="text-[10px] text-white/50 leading-relaxed line-clamp-3">{story.synopsis}</p>
-              {story.selected && (
-                <div className="flex items-center gap-1 mt-2 text-[10px] text-green-500">
-                  <span>✓</span>
-                  <span>已选择</span>
-                </div>
-              )}
+              <p className="text-xs text-white/60 mb-2">{story.logline}</p>
+              <p className="text-xs text-white/40 line-clamp-2">{story.synopsis}</p>
             </div>
           ))}
         </div>
-      </DetailSection>
 
-      {/* Action Buttons */}
-      <div className="flex gap-2 pt-2">
-        <Button variant="outline" size="sm" className="flex-1">
-          重新生成
+        <Button variant="default" size="sm" className="w-full mt-4" onClick={onNodeComplete}>
+          <Sparkles className="h-4 w-4" />
+          确认并继续
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
-          <Sparkles className="h-3.5 w-3.5" />
-          确认选择
-        </Button>
-      </div>
+      </DetailSection>
     </div>
   );
 }

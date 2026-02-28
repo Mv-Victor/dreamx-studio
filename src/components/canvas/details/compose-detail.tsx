@@ -4,8 +4,15 @@ import { Download, Play, Settings2, Film } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { ComposeData } from '@/types/canvas';
 
-export function ComposeDetail() {
+interface ComposeDetailProps {
+  nodeData?: ComposeData;
+  updateNode?: (patch: Partial<ComposeData>) => void;
+  onNodeComplete?: () => void;
+}
+
+export function ComposeDetail({ onNodeComplete }: ComposeDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={Film} label="Preview">
@@ -47,7 +54,7 @@ export function ComposeDetail() {
         <Button variant="outline" size="sm" className="flex-1">
           剪映工程
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
+        <Button variant="default" size="sm" className="flex-1" onClick={onNodeComplete}>
           <Download className="h-3.5 w-3.5" />
           导出视频
         </Button>

@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Sparkles, ChevronRight, Monitor, Shield, Film, Clock, Type, Image as ImageIcon, FileText } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';

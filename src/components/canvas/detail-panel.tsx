@@ -65,13 +65,27 @@ export function DetailPanel({ selectedNodeId, onClose, onNodeComplete }: DetailP
         {nodeType === 'checkpoint' && (
           <CheckPointDetail nodeData={nodeData as CheckPointData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
         )}
-        {nodeType === 'storybible' && <StoryBibleDetail />}
-        {nodeType === 'characterpack' && <CharacterPackDetail />}
-        {nodeType === 'planningcenter' && <PlanningCenterDetail />}
-        {nodeType === 'script' && <ScriptDetail />}
-        {nodeType === 'scenedesign' && <SceneDesignDetail />}
-        {nodeType === 'segmentdesign' && <SegmentDesignDetail />}
-        {nodeType === 'compose' && <ComposeDetail />}
+        {nodeType === 'storybible' && (
+          <StoryBibleDetail nodeData={nodeData as StoryBibleData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'characterpack' && (
+          <CharacterPackDetail nodeData={nodeData as CharacterPackData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'planningcenter' && (
+          <PlanningCenterDetail nodeData={nodeData as PlanningCenterData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'script' && (
+          <ScriptDetail nodeData={nodeData as ScriptData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'scenedesign' && (
+          <SceneDesignDetail nodeData={nodeData as SceneDesignData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'segmentdesign' && (
+          <SegmentDesignDetail nodeData={nodeData as SegmentDesignData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
+        {nodeType === 'compose' && (
+          <ComposeDetail nodeData={nodeData as ComposeData} updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,13 @@ import { Sparkles, RefreshCw, Image as ImageIcon, Lock } from 'lucide-react';
 import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { StatusBadge } from '@/components/ui/status-badge';
+import type { SceneDesignData } from '@/types/canvas';
+
+interface SceneDesignDetailProps {
+  nodeData?: SceneDesignData;
+  updateNode?: (patch: Partial<SceneDesignData>) => void;
+  onNodeComplete?: () => void;
+}
 
 const mockScenes = [
   { id: 1, header: '外景 - 荒山古道 - 黄昏', status: 'completed' as const },
@@ -12,7 +19,7 @@ const mockScenes = [
   { id: 4, header: '内景 - 客栈 - 午后', status: 'pending' as const },
 ];
 
-export function SceneDesignDetail() {
+export function SceneDesignDetail({ onNodeComplete }: SceneDesignDetailProps) {
   return (
     <div className="p-4 space-y-4">
       <DetailSection icon={ImageIcon} label="Scene Design">
@@ -60,7 +67,7 @@ export function SceneDesignDetail() {
           <RefreshCw className="h-3.5 w-3.5" />
           重新生成
         </Button>
-        <Button variant="default" size="sm" className="flex-1">
+        <Button variant="default" size="sm" className="flex-1" onClick={onNodeComplete}>
           <Sparkles className="h-3.5 w-3.5" />
           确认场景
         </Button>

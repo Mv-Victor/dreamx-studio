@@ -3,17 +3,6 @@
  */
 
 /**
- * Generation task type labels for UI display
- * Centralized for i18n support
- */
-export const TASK_TYPE_LABELS = Object.freeze({
-  image: '生成图片',
-  video: '生成视频',
-  characters: '生成角色集',
-  script: '生成剧本',
-} as const);
-
-/**
  * Node status labels
  */
 export const NODE_STATUS_LABELS = Object.freeze({

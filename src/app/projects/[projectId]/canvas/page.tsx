@@ -202,13 +202,11 @@ const CanvasInner = React.memo(function CanvasInner() {
     []
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onConnectStart = useCallback((_: any) => {
+  const onConnectStart = useCallback(() => {
     setConnectionStatus(null);
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onConnectEnd = useCallback((_: any) => {
+  const onConnectEnd = useCallback(() => {
     // Connection end handled by isValidConnection + onConnect
     setConnectionStatus(null);
   }, []);
@@ -238,8 +236,7 @@ const CanvasInner = React.memo(function CanvasInner() {
     [setSelectedNodeId]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPaneClick = useCallback((_event: any) => {
+  const onPaneClick = useCallback(() => {
     setSelectedNodeId(null);
   }, [setSelectedNodeId]);
 
