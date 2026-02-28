@@ -22,23 +22,17 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
     console.warn('[CheckPointDetail] updateNode not provided:', patch);
   });
 
-  // Type guards for safe type narrowing
-  const isValidLanguage = (lang: string): lang is 'zh-CN' | 'en-US' =>
-    ['zh-CN', 'en-US'].includes(lang);
-  const isValidRating = (rating: string): rating is 'PG' | 'PG-13' | 'R' =>
-    ['PG', 'PG-13', 'R'].includes(rating);
-
   return (
     <div className="p-5 space-y-5">
       {/* Language */}
       <DetailSection icon={Type} label="Language">
         <SegmentedControl
           options={[
-            { value: 'zh-CN' as const, label: '中文' },
-            { value: 'en-US' as const, label: 'English' },
+            { value: 'zh-CN', label: '中文' },
+            { value: 'en-US', label: 'English' },
           ]}
-          value={isValidLanguage(data.language) ? data.language : 'zh-CN'}
-          onChange={(val) => updateNode({ language: val })}
+          value={data.language}
+          onChange={(val) => updateNode({ language: val as 'zh-CN' | 'en-US' })}
         />
       </DetailSection>
 
@@ -46,12 +40,12 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
       <DetailSection icon={Shield} label="Content Rating">
         <SegmentedControl
           options={[
-            { value: 'PG' as const, label: 'PG' },
-            { value: 'PG-13' as const, label: 'PG-13' },
-            { value: 'R' as const, label: 'R' },
+            { value: 'PG', label: 'PG' },
+            { value: 'PG-13', label: 'PG-13' },
+            { value: 'R', label: 'R' },
           ]}
-          value={isValidRating(data.rating) ? data.rating : 'PG'}
-          onChange={(val) => updateNode({ rating: val })}
+          value={data.rating}
+          onChange={(val) => updateNode({ rating: val as 'PG' | 'PG-13' | 'R' })}
         />
       </DetailSection>
 
@@ -63,8 +57,8 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
             { value: '16:9', label: '16:9' },
             { value: '1:1', label: '1:1' },
           ]}
-          value={data.camera_frame_ratio || '9:16'}
-          onChange={(val) => updateNode({ camera_frame_ratio: val })}
+          value={data.camera_frame_ratio}
+          onChange={(val) => updateNode({ camera_frame_ratio: val as '9:16' | '16:9' | '1:1' })}
         />
       </DetailSection>
 
