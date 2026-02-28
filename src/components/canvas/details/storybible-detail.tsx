@@ -26,7 +26,7 @@ export const StoryBibleDetail = ({ _nodeData, _updateNode, onNodeComplete }: Sto
   });
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={BookOpen} label="Story Options">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-white/40">AI 生成了 {STORY_BIBLE_MOCK_DATA.length} 个故事方案</p>

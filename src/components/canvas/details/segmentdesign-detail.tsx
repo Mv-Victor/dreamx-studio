@@ -26,7 +26,7 @@ export const SegmentDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: 
   });
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={Clapperboard} label="Segments">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs text-white/40">{SEGMENT_DESIGN_MOCK_DATA.length} 个分镜</p>
@@ -45,7 +45,7 @@ export const SegmentDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: 
                   <Play className="h-4 w-4 text-white/40" />
                 )}
                 {seg.status === 'generating' && (
-                  <div className="w-3.5 h-3.5 border-2 border-[#FF4D4D] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-3.5 h-3.5 border-2 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin" />
                 )}
                 {seg.status === 'pending' && (
                   <Lock className="h-3.5 w-3.5 text-white/10" />

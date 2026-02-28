@@ -39,7 +39,7 @@ export const PlanningCenterDetail = ({ _nodeData, _updateNode, onNodeComplete }:
   ];
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       {/* Tabs */}
       <div className="flex gap-1 rounded-lg p-1 bg-[var(--bg-white-5)]">
         {tabs.map((tab) => (

@@ -25,7 +25,7 @@ export const SceneDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: Sc
   });
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={ImageIcon} label="Scene Design">
         <p className="text-xs text-white/40 mb-3">AI 为每个场景生成视觉参考图</p>
 
@@ -36,7 +36,7 @@ export const SceneDesignDetail = ({ _nodeData, _updateNode, onNodeComplete }: Sc
                 {scene.status === 'generating' && (
                   <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-5 h-5 border-2 border-[#FF4D4D] border-t-transparent rounded-full animate-spin mx-auto" />
+                      <div className="w-5 h-5 border-2 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin mx-auto" />
                       <p className="text-[10px] text-white/60 mt-2">生成中...</p>
                     </div>
                   </div>

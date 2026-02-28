@@ -115,7 +115,7 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
               <div className="aspect-video bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center relative overflow-hidden">
                 <div className="text-2xl opacity-30">🎨</div>
                 {_data.visual_style_id === style.id && (
-                  <div className="absolute inset-0 bg-[rgba(192,3,28,0.20)] flex items-center justify-center">
+                  <div className="absolute inset-0 bg-[var(--brand-primary-rgba-20)] flex items-center justify-center">
                     <span className="text-white text-xs font-medium">✓</span>
                   </div>
                 )}

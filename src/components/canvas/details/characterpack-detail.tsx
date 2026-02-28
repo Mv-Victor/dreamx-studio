@@ -42,7 +42,7 @@ export const CharacterPackDetail = ({ _nodeData, _updateNode, onNodeComplete }: 
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={User} label="Characters">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs text-white/40">{characters.length} 个角色</span>

@@ -22,7 +22,7 @@ export const ComposeDetail = ({ _nodeData, _updateNode, onNodeComplete }: Compos
     console.warn('[ComposeDetail] updateNode not provided:', patch);
   });
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={Film} label="Preview">
         <p className="text-xs text-white/40 mb-3">将所有分镜合成为最终视频</p>
 
@@ -52,7 +52,7 @@ export const ComposeDetail = ({ _nodeData, _updateNode, onNodeComplete }: Compos
           </div>
           <div className="flex items-center justify-between pt-2 border-t border-white/10">
             <span className="text-[10px] text-white/40">预计积分</span>
-            <span className="text-[10px] font-medium text-[#FF4D4D]">5</span>
+            <span className="text-[10px] font-medium text-[var(--brand-primary)]">5</span>
           </div>
         </div>
       </DetailSection>

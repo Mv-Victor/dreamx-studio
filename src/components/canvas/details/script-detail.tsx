@@ -38,7 +38,7 @@ export const ScriptDetail = ({ _nodeData, _updateNode, onNodeComplete }: ScriptD
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-5 space-y-5">
       <DetailSection icon={FileText} label="Script">
         <div className="flex items-center justify-between mb-3">
           <div>
@@ -64,7 +64,7 @@ export const ScriptDetail = ({ _nodeData, _updateNode, onNodeComplete }: ScriptD
 
               {/* Dialogue */}
               {scene.dialogue.length > 0 && (
-                <div className="space-y-1 pl-2 border-l-2 border-[rgba(192,3,28,0.30)]">
+                <div className="space-y-1 pl-2 border-l-2 border-[var(--brand-primary-rgba-30)]">
                   {scene.dialogue.map((line, i) => (
                     <p key={i} className="text-[10px] text-white/70">{line}</p>
                   ))}
