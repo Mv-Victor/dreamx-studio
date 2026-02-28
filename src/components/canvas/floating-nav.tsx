@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Minus, Maximize, List, Move, ChevronLeft } from 'lucide-react';
+import { Plus, Minus, Maximize, ChevronLeft } from 'lucide-react';
 import { useReactFlow } from '@xyflow/react';
 
 interface FloatingNavProps {
@@ -78,22 +78,6 @@ export function FloatingNav({ onAddNode }: FloatingNavProps) {
         <Maximize className="h-5 w-5 text-[var(--drama-text-tertiary)]" />
       </button>
 
-      {/* Divider */}
-      <div className="h-px w-6 bg-[var(--drama-border)]" />
-
-      {/* View Modes */}
-      <button
-        className="p-2 rounded-lg hover:bg-[var(--drama-bg-white-5)] cursor-pointer transition-colors"
-        title="节点列表"
-      >
-        <List className="h-5 w-5 text-[var(--drama-text-tertiary)]" />
-      </button>
-      <button
-        className="p-2 rounded-lg hover:bg-[var(--drama-bg-white-5)] cursor-pointer transition-colors"
-        title="拖拽模式"
-      >
-        <Move className="h-5 w-5 text-[var(--drama-text-tertiary)]" />
-      </button>
     </aside>
   );
 }

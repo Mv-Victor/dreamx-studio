@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ChevronLeft, Maximize } from 'lucide-react';
 import {
   ReactFlow,
   Background,
@@ -216,7 +215,11 @@ const CanvasInner = React.memo(function CanvasInner() {
 
   const connectionLineStyle = useMemo(
     () => ({
-      stroke: connectionStatus === 'valid' ? '#22c55e' : connectionStatus === 'invalid' ? '#ef4444' : 'rgba(255,255,255,0.5)',
+      stroke: connectionStatus === 'valid' 
+        ? 'var(--drama-edge-valid, #22c55e)' 
+        : connectionStatus === 'invalid' 
+          ? 'var(--drama-edge-invalid, #ef4444)' 
+          : 'var(--drama-edge-color, rgba(255,255,255,0.20))',
       strokeWidth: 2,
     }),
     [connectionStatus]

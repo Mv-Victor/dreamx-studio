@@ -4,11 +4,41 @@ import { useReactFlow } from '@xyflow/react';
 import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 import type { WorkflowNodeData, CheckPointData, StoryBibleData, CharacterPackData, PlanningCenterData, ScriptData, SceneDesignData, SegmentDesignData, ComposeData } from '@/types/canvas';
+
+// Simple Error Boundary for dynamic imports
+class ErrorBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('[DetailPanel] Error loading component:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 const DetailLoading = () => (
   <div className="flex items-center justify-center h-40">
     <Spinner />
+  </div>
+);
+
+const DetailError = () => (
+  <div className="flex items-center justify-center h-40 text-[var(--drama-text-tertiary)] text-sm">
+    加载失败，请刷新重试
   </div>
 );
 
@@ -62,30 +92,32 @@ export function DetailPanel({ selectedNodeId, onClose, onNodeComplete }: DetailP
       
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        {nodeType === 'checkpoint' && (
-          <CheckPointDetail _nodeData={nodeData as CheckPointData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'storybible' && (
-          <StoryBibleDetail _nodeData={nodeData as StoryBibleData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'characterpack' && (
-          <CharacterPackDetail _nodeData={nodeData as CharacterPackData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'planningcenter' && (
-          <PlanningCenterDetail _nodeData={nodeData as PlanningCenterData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'script' && (
-          <ScriptDetail _nodeData={nodeData as ScriptData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'scenedesign' && (
-          <SceneDesignDetail _nodeData={nodeData as SceneDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'segmentdesign' && (
-          <SegmentDesignDetail _nodeData={nodeData as SegmentDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
-        {nodeType === 'compose' && (
-          <ComposeDetail _nodeData={nodeData as ComposeData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
-        )}
+        <ErrorBoundary fallback={<DetailError />}>
+          {nodeType === 'checkpoint' && (
+            <CheckPointDetail _nodeData={nodeData as CheckPointData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'storybible' && (
+            <StoryBibleDetail _nodeData={nodeData as StoryBibleData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'characterpack' && (
+            <CharacterPackDetail _nodeData={nodeData as CharacterPackData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'planningcenter' && (
+            <PlanningCenterDetail _nodeData={nodeData as PlanningCenterData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'script' && (
+            <ScriptDetail _nodeData={nodeData as ScriptData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'scenedesign' && (
+            <SceneDesignDetail _nodeData={nodeData as SceneDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'segmentdesign' && (
+            <SegmentDesignDetail _nodeData={nodeData as SegmentDesignData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+          {nodeType === 'compose' && (
+            <ComposeDetail _nodeData={nodeData as ComposeData} _updateNode={updateNode} onNodeComplete={() => onNodeComplete?.(selectedNodeId)} />
+          )}
+        </ErrorBoundary>
       </div>
     </div>
   );

@@ -30,6 +30,12 @@
   --drama-text-muted: rgba(255, 255, 255, 0.30);
   --drama-text-faint: rgba(255, 255, 255, 0.20);
   
+  /* Edge Colors */
+  --drama-edge-color: rgba(255, 255, 255, 0.20);
+  --drama-edge-color-selected: rgba(192, 3, 28, 0.60);
+  --drama-edge-valid: #22c55e;
+  --drama-edge-invalid: #ef4444;
+  
   /* Brand Colors */
   --brand-primary: #C0031C;
   --brand-accent: #FF4D4D;
