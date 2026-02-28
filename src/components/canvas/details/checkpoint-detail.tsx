@@ -6,18 +6,17 @@ import { DetailSection } from '@/components/ui/detail-section';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SegmentedControl } from '@/components/ui/segmented-control';
-import type { WorkflowNodeData } from '@/types/canvas';
+import type { CheckPointData } from '@/types/canvas';
 import { visualStyles } from '@/mock/visual-styles';
 
 interface CheckPointDetailProps {
-  nodeData: WorkflowNodeData;
-  updateNode: (patch: Partial<WorkflowNodeData>) => void;
+  nodeData: CheckPointData;
+  updateNode: (patch: Partial<CheckPointData>) => void;
   onNodeComplete?: () => void;
 }
 
 export function CheckPointDetail({ nodeData, updateNode, onNodeComplete }: CheckPointDetailProps) {
-  // Cast to CheckPoint specific data shape
-  const data = nodeData as any;
+  const data = nodeData;
 
   return (
     <div className="p-5 space-y-5">

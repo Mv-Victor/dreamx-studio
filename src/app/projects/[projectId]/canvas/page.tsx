@@ -219,6 +219,14 @@ const CanvasInner = React.memo(function CanvasInner() {
     [isValidConnection]
   );
 
+  const connectionLineStyle = useMemo(
+    () => ({
+      stroke: connectionStatus === 'valid' ? '#22c55e' : connectionStatus === 'invalid' ? '#ef4444' : 'rgba(255,255,255,0.5)',
+      strokeWidth: 2,
+    }),
+    [connectionStatus]
+  );
+
   const onNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {
       const data = node.data as WorkflowNodeData;
@@ -324,10 +332,7 @@ const CanvasInner = React.memo(function CanvasInner() {
             onViewportChange={onViewportChange}
             nodeTypes={nodeTypes}
             isValidConnection={isValidConnection}
-            connectionLineStyle={{
-              stroke: connectionStatus === 'valid' ? '#22c55e' : connectionStatus === 'invalid' ? '#ef4444' : 'rgba(255,255,255,0.5)',
-              strokeWidth: 2,
-            }}
+            connectionLineStyle={connectionLineStyle}
             fitView
             fitViewOptions={{ padding: 0.3 }}
             minZoom={0.3}

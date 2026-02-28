@@ -27,12 +27,12 @@ export interface BaseNodeData {
 }
 
 export interface CheckPointData extends BaseNodeData {
-  language?: string;
-  rating?: string;
-  camera_frame_ratio?: string;
-  episode_count?: number;
-  episode_duration?: number;
-  visual_style_id?: string;
+  language: 'zh-CN' | 'en-US';
+  rating: 'PG' | 'PG-13' | 'R';
+  camera_frame_ratio: '9:16' | '16:9' | '1:1';
+  episode_count: number;
+  episode_duration: number;
+  visual_style_id: number;
   idea_text?: string;
 }
 
