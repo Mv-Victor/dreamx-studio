@@ -137,11 +137,6 @@ const CanvasInner = React.memo(function CanvasInner() {
   // Track if initial load is complete (separate from initialLoadRef to avoid coupling)
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
 
-  // Mark initial load as complete after first render
-  useEffect(() => {
-    setIsInitialLoadComplete(true);
-  }, []);
-
   // 当 projectType 变化时，只更新节点状态，不重置整个 nodes 数组
   useEffect(() => {
     // Skip during initial load (handled by the initialization effect above)
