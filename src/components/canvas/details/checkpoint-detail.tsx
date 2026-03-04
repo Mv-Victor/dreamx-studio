@@ -141,7 +141,7 @@ export const CheckPointDetail = ({ _nodeData, _updateNode, onNodeComplete }: Che
           value={_data.idea_text || ''}
           onChange={(e) => _updateNodeFn({ idea_text: e.target.value })}
           placeholder="描述你的创意故事..."
-          className="w-full min-h-[100px] rounded-lg border-[var(--drama-border)] bg-[var(--drama-bg-white-5)] px-3 py-2.5 text-xs text-[var(--drama-text-primary)] placeholder:text-[var(--drama-text-faint)] focus:outline-none focus:border-[var(--drama-red)] resize-none transition-colors"
+          className="w-full min-h-[100px] rounded-lg border-[var(--drama-border-strong)] bg-[var(--drama-bg-white-5)] px-3 py-2.5 text-xs text-[var(--drama-text-primary)] placeholder:text-[var(--drama-text-faint)] focus:outline-none focus:border-[var(--drama-red)] resize-none transition-colors"
         />
       </DetailSection>
 

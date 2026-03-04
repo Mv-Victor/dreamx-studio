@@ -40,7 +40,7 @@ const BaseWorkflowNodeComponent = function BaseWorkflowNode({
   const statusBg = statusConfig.bg;
 
   const borderClass = selected 
-    ? 'border-[var(--drama-red-border)] shadow-lg shadow-[rgba(192,3,28,0.25)]' 
+    ? 'border-[var(--drama-red-border)] shadow-[0_0_20px_rgba(192,3,28,0.3)]' 
     : locked 
       ? 'border-[var(--drama-border)]' 
       : 'border-[var(--drama-border)]';
@@ -49,7 +49,7 @@ const BaseWorkflowNodeComponent = function BaseWorkflowNode({
 
   return (
     <div className={cn(
-      'w-[240px] rounded-xl border-[1.5px] px-4 py-3.5 transition-all duration-200',
+      'w-[240px] rounded-xl border-[1.5px] px-4 py-3 transition-all duration-200',
       borderClass,
       bgClass,
       status === 'generating' && 'animate-pulse-glow'
